@@ -1,14 +1,10 @@
 import { Section } from "@/components/shared/Section";
+import { Hero } from "@/components/sections/hero/Hero";
 
-/* Provisional: el hero real llega en el paso 5. Sirve para ver el header sobre fondo oscuro. */
 export default function HomePage() {
   return (
     <>
-      <Section tone="dark" flush className="flex min-h-[70vh] items-center pt-24 pb-16">
-        <div className="container-site">
-          <p className="text-sm text-muted-foreground">Hero · paso 5</p>
-        </div>
-      </Section>
+      <Hero />
       <Section tone="light" id="tienda">
         <p className="text-sm text-muted-foreground">Tienda · paso 6</p>
       </Section>
