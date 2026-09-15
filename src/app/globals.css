@@ -2,43 +2,236 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/* ════════════════════════════════════════════════════════════════════════
+   1 · PALETA DE MARCA — EL ÚNICO LUGAR DONDE SE CAMBIAN LOS COLORES
+   ────────────────────────────────────────────────────────────────────────
+   Cambia un valor aquí y se actualiza en todo el sitio.
+   Nada más abajo debe llevar un hex escrito a mano.
+   ════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Rosados */
+  --brand-pink: #ff93ce; /* Rosa Digital · acento principal (elegido por la clienta) */
+  --brand-pink-deep: #d85a9f; /* Rosa Profundo · secundario */
+  --brand-plum: #8e2f67; /* Ciruela · botón primario sobre fondo claro, sección de captación */
+  --brand-violet: #7a5af8; /* Violeta · acento puntual (icono del plan de entrenamiento) */
 
+  /* Morados oscuros (fondos) */
+  --brand-night: #241323; /* fondo oscuro base · hero, tienda… */
+  --brand-wine: #36192f; /* fondo oscuro alterno · recetas, testimonios… */
+  --brand-elevated: #44203b; /* tarjetas sobre fondo oscuro */
+  --brand-deep: #1b0e1a; /* footer */
+
+  /* Claros (fondos de respiro) */
+  --brand-ice: #fff0f8; /* Rosa Hielo · secciones claras */
+  --brand-mist: #f4f1f5; /* Niebla · fondo claro secundario */
+  --brand-white: #ffffff;
+
+  /* Texto */
+  --brand-text-on-dark: #ffffff;
+  --brand-text-on-dark-muted: #c4b2c1;
+  --brand-text-on-light: #241323;
+  --brand-text-on-light-muted: #6b6270;
+
+  /* Bordes */
+  --brand-border-on-dark: #4a2c43;
+  --brand-border-on-light: #ebd5e4;
+
+  /* Utilidad */
+  --brand-whatsapp: #25d366;
+  --brand-danger: #d64545;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   2 · TOKENS SEMÁNTICOS — derivan de la paleta, NO se editan
+   ────────────────────────────────────────────────────────────────────────
+   Son los nombres que usan shadcn/ui y Tailwind (bg-background, text-primary…).
+   Cada sección declara su tono con data-tone y todo lo que hay dentro
+   toma el color correcto de forma automática.
+
+   El tono por defecto del documento es OSCURO porque el sitio es oscuro-
+   dominante: así el header y el body nunca parpadean en blanco.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── Oscuro (por defecto) ─────────────────────────────────────────────── */
+:root,
+[data-tone="dark"] {
+  --background: var(--brand-night);
+  --foreground: var(--brand-text-on-dark);
+
+  --card: var(--brand-elevated);
+  --card-foreground: var(--brand-text-on-dark);
+  --popover: var(--brand-elevated);
+  --popover-foreground: var(--brand-text-on-dark);
+
+  --primary: var(--brand-pink);
+  --primary-foreground: var(--brand-night);
+  --secondary: var(--brand-wine);
+  --secondary-foreground: var(--brand-text-on-dark);
+  --muted: var(--brand-wine);
+  --muted-foreground: var(--brand-text-on-dark-muted);
+  --accent: var(--brand-pink);
+  --accent-foreground: var(--brand-night);
+  --destructive: var(--brand-danger);
+
+  --border: var(--brand-border-on-dark);
+  --input: var(--brand-border-on-dark);
+  --ring: var(--brand-pink);
+
+  --chart-1: var(--brand-pink);
+  --chart-2: var(--brand-pink-deep);
+  --chart-3: var(--brand-plum);
+  --chart-4: var(--brand-violet);
+  --chart-5: var(--brand-text-on-dark-muted);
+
+  --sidebar: var(--brand-wine);
+  --sidebar-foreground: var(--brand-text-on-dark);
+  --sidebar-primary: var(--brand-pink);
+  --sidebar-primary-foreground: var(--brand-night);
+  --sidebar-accent: var(--brand-elevated);
+  --sidebar-accent-foreground: var(--brand-text-on-dark);
+  --sidebar-border: var(--brand-border-on-dark);
+  --sidebar-ring: var(--brand-pink);
+
+  --radius: 0.75rem;
+}
+
+/* ── Vino (oscuro alterno) — igual que oscuro, solo cambia el fondo ───── */
+[data-tone="wine"] {
+  --background: var(--brand-wine);
+  --secondary: var(--brand-night);
+  --muted: var(--brand-night);
+  --sidebar: var(--brand-night);
+}
+
+/* ── Profundo (footer) ────────────────────────────────────────────────── */
+[data-tone="deep"] {
+  --background: var(--brand-deep);
+  --card: var(--brand-night);
+  --popover: var(--brand-night);
+  --secondary: var(--brand-night);
+  --muted: var(--brand-night);
+}
+
+/* ── Claro (secciones de respiro) ─────────────────────────────────────── */
+[data-tone="light"] {
+  --background: var(--brand-ice);
+  --foreground: var(--brand-text-on-light);
+
+  --card: var(--brand-white);
+  --card-foreground: var(--brand-text-on-light);
+  --popover: var(--brand-white);
+  --popover-foreground: var(--brand-text-on-light);
+
+  --primary: var(--brand-plum);
+  --primary-foreground: var(--brand-white);
+  --secondary: var(--brand-mist);
+  --secondary-foreground: var(--brand-text-on-light);
+  --muted: var(--brand-mist);
+  --muted-foreground: var(--brand-text-on-light-muted);
+  --accent: var(--brand-pink);
+  --accent-foreground: var(--brand-night);
+
+  --border: var(--brand-border-on-light);
+  --input: var(--brand-border-on-light);
+  --ring: var(--brand-plum);
+
+  --chart-5: var(--brand-text-on-light-muted);
+
+  --sidebar: var(--brand-white);
+  --sidebar-foreground: var(--brand-text-on-light);
+  --sidebar-primary: var(--brand-plum);
+  --sidebar-primary-foreground: var(--brand-white);
+  --sidebar-accent: var(--brand-mist);
+  --sidebar-accent-foreground: var(--brand-text-on-light);
+  --sidebar-border: var(--brand-border-on-light);
+  --sidebar-ring: var(--brand-plum);
+}
+
+/* ── Ciruela (captación / punto alto) ─────────────────────────────────── */
+[data-tone="plum"] {
+  --background: var(--brand-plum);
+  --foreground: var(--brand-white);
+
+  /* Las tarjetas sobre ciruela son ciruela más claro con texto blanco,
+     así el texto tenue (muted) sigue siendo legible dentro de ellas. */
+  --card: color-mix(in oklch, var(--brand-plum), var(--brand-white) 10%);
+  --card-foreground: var(--brand-white);
+  --popover: color-mix(in oklch, var(--brand-plum), var(--brand-white) 10%);
+  --popover-foreground: var(--brand-white);
+
+  --primary: var(--brand-pink);
+  --primary-foreground: var(--brand-night);
+  --secondary: color-mix(in oklch, var(--brand-plum), var(--brand-white) 12%);
+  --secondary-foreground: var(--brand-white);
+  --muted: color-mix(in oklch, var(--brand-plum), var(--brand-white) 12%);
+  --muted-foreground: color-mix(in oklch, var(--brand-white), var(--brand-plum) 25%);
+  --accent: var(--brand-pink);
+  --accent-foreground: var(--brand-night);
+
+  --border: color-mix(in oklch, var(--brand-white), transparent 70%);
+  --input: color-mix(in oklch, var(--brand-white), transparent 50%);
+  --ring: var(--brand-pink);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   3 · EXPOSICIÓN A TAILWIND — genera las clases (bg-brand-pink, text-primary…)
+   ════════════════════════════════════════════════════════════════════════ */
 @theme inline {
+  /* Paleta de marca → bg-brand-*, text-brand-*, border-brand-* */
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-pink-deep: var(--brand-pink-deep);
+  --color-brand-plum: var(--brand-plum);
+  --color-brand-violet: var(--brand-violet);
+  --color-brand-night: var(--brand-night);
+  --color-brand-wine: var(--brand-wine);
+  --color-brand-elevated: var(--brand-elevated);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-ice: var(--brand-ice);
+  --color-brand-mist: var(--brand-mist);
+  --color-brand-white: var(--brand-white);
+  --color-brand-whatsapp: var(--brand-whatsapp);
+  --color-brand-danger: var(--brand-danger);
+
+  /* Semánticos → bg-background, text-foreground, bg-primary… */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Tipografía (las variables --font-figtree / --font-great-vibes las inyecta next/font) */
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-great-vibes), cursive;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Radios (shadcn) */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -46,89 +239,70 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Ancho de contenido del sitio */
+  --container-site: 80rem;
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
+/* ════════════════════════════════════════════════════════════════════════
+   4 · BASE
+   ════════════════════════════════════════════════════════════════════════ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    @apply font-sans antialiased;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   body {
     @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
   }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading font-bold tracking-tight;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
-  html {
-    @apply font-sans;
+
+  ::selection {
+    background: var(--brand-pink);
+    color: var(--brand-night);
   }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   5 · UTILIDADES PROPIAS
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Contenedor del sitio: ancho máximo + márgenes laterales responsivos */
+@utility container-site {
+  @apply mx-auto w-full max-w-(--container-site) px-5 sm:px-8 lg:px-12;
 }
