@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Figtree, Great_Vibes } from "next/font/google";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { site } from "@/data/site";
 import "./globals.css";
 
 /* Fuente principal de todo el sitio (variable, self-hosted por next/font, sin CLS) */
@@ -18,15 +22,30 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Be Like Lina",
-  description:
-    "Entrenamientos inteligentes, nutrición real y mentalidad para transformar tu cuerpo y tu vida.",
+  title: {
+    default: site.name,
+    template: `%s · ${site.name}`,
+  },
+  description: site.tagline,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es-CO" className={`${figtree.variable} ${greatVibes.variable} h-full`}>
-      <body className="flex min-h-full flex-col">{children}</body>
+    <html lang={site.locale} className={`${figtree.variable} ${greatVibes.variable} h-full`}>
+      <body className="flex min-h-full flex-col">
+        <a
+          href="#contenido"
+          className="sr-only z-50 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+        >
+          Saltar al contenido
+        </a>
+        <Header />
+        <main id="contenido" className="flex-1">
+          {children}
+        </main>
+        <Footer />
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }
