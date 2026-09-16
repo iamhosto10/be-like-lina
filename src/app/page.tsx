@@ -1,13 +1,12 @@
 import { Section } from "@/components/shared/Section";
 import { Hero } from "@/components/sections/hero/Hero";
+import { StoreSection } from "@/components/sections/StoreSection";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <Section tone="light" id="tienda">
-        <p className="text-sm text-muted-foreground">Tienda · paso 6</p>
-      </Section>
+      <StoreSection />
       <Section tone="wine" id="recetas">
         <p className="text-sm text-muted-foreground">Recetas · paso 7</p>
       </Section>

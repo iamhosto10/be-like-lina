@@ -32,7 +32,11 @@ export function Section({
   return (
     <section
       data-tone={tone}
-      className={cn("bg-background text-foreground", !flush && "py-16 md:py-24", className)}
+      className={cn(
+        "scroll-mt-16 bg-background text-foreground md:scroll-mt-20",
+        !flush && "py-16 md:py-24",
+        className,
+      )}
       {...rest}
     >
       {contained ? <div className="container-site">{children}</div> : children}
