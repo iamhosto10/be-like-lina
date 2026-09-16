@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Be Like Lina — sitio web
 
-## Getting Started
+Sitio de **Be Like Lina**, marca de Lina Fuentes (entrenadora integral para la mujer, Valledupar, Colombia): planes de coaching, suplementos y recetas.
 
-First, run the development server:
+Construido con **Next.js 16** (App Router) · **TypeScript** · **Tailwind CSS v4** · **shadcn/ui**.
+
+## Empezar
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev          # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Script                      | Qué hace                                                    |
+| --------------------------- | ----------------------------------------------------------- |
+| `pnpm dev`                  | Servidor de desarrollo                                      |
+| `pnpm build` · `pnpm start` | Build y servidor de producción                              |
+| `pnpm check`                | `lint` + `typecheck` + `format:check`, todo en uno          |
+| `pnpm format`               | Prettier sobre todo el proyecto                             |
+| `pnpm images`               | Optimiza las imágenes fuente a `public/images/` (ver abajo) |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Cómo cambiar los colores
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Todos los colores del sitio salen de **un solo archivo**: [`src/app/globals.css`](src/app/globals.css).
 
-## Learn More
+Tiene tres niveles y **solo se edita el primero**:
 
-To learn more about Next.js, take a look at the following resources:
+```
+1 · PALETA DE MARCA        --brand-pink: #ff93ce   ← aquí se cambian los colores
+2 · TOKENS SEMÁNTICOS      --primary: var(--brand-pink)   (por tono; no se tocan)
+3 · EXPOSICIÓN A TAILWIND  --color-primary: var(--primary) (genera bg-primary, etc.)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Cambia `--brand-pink` y se actualizan botones, enlaces, iconos, halos y la palabra destacada del hero en todo el sitio.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Tonos por sección
 
-## Deploy on Vercel
+Cada sección declara su tono con `<Section tone="dark | wine | light | plum | deep">`. Ese atributo activa un juego completo de tokens, así que el mismo `<Button>` sale rosa sobre oscuro y ciruela sobre claro sin ninguna clase de color propia.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+En desarrollo, `/design` muestra la paleta, la tipografía y cada tono con los componentes reales (en producción devuelve 404).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Estructura
+
+```
+src/
+├── app/            layout, página de inicio, globals.css, iconos, rutas provisionales
+├── components/
+│   ├── ui/         shadcn/ui (generados)
+│   ├── layout/     Header, MobileMenu, Footer, WhatsAppButton
+│   ├── sections/   Hero, StoreSection, RecipesSection, PlansSection, BlogSection
+│   └── shared/     Section, SectionHeader, tarjetas, NewsletterForm, Logo…
+├── data/           site.ts (config), products, plans, recipes, posts, hero, lina
+├── actions/        Server Actions (newsletter)
+├── lib/            formatCOP, enlaces de WhatsApp
+└── types/
+```
+
+Todo lo que es **dato** (textos, precios, enlaces, número de WhatsApp, menú) vive en `src/data/`. Todo lo que es **diseño** vive en `globals.css` y los componentes.
+
+## Imágenes
+
+Las fotos fuente (originales y retocadas) están **fuera del repo**, en la carpeta padre. `pnpm images` las convierte a WebP en los tamaños necesarios y las deja en `public/images/`; falla si alguna supera 300 KB. El manifiesto está en [`scripts/optimize-images.mjs`](scripts/optimize-images.mjs).
+
+## Estado
+
+Fase 1: página de inicio completa (hero, tienda, recetas, planes, blog, footer). Los productos enlazan a la tienda actual (belikelina.com) y los planes abren WhatsApp. Las páginas de artículos y recetas muestran «próximamente» (`noindex`) hasta que exista el contenido.
