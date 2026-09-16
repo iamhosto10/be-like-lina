@@ -38,7 +38,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.4fr] lg:gap-12">
           {/* Marca */}
           <div className="space-y-5">
-            <Logo />
+            <Logo size="lg" />
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">{site.tagline}</p>
             <SocialLinks />
           </div>

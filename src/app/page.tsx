@@ -2,6 +2,7 @@ import { Section } from "@/components/shared/Section";
 import { Hero } from "@/components/sections/hero/Hero";
 import { StoreSection } from "@/components/sections/StoreSection";
 import { RecipesSection } from "@/components/sections/RecipesSection";
+import { PlansSection } from "@/components/sections/PlansSection";
 
 export default function HomePage() {
   return (
@@ -9,9 +10,7 @@ export default function HomePage() {
       <Hero />
       <StoreSection />
       <RecipesSection />
-      <Section tone="light" id="planes">
-        <p className="text-sm text-muted-foreground">Planes · paso 8</p>
-      </Section>
+      <PlansSection />
       <Section tone="dark" id="blog">
         <p className="text-sm text-muted-foreground">Blog · paso 9</p>
       </Section>

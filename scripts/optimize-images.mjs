@@ -68,6 +68,9 @@ const jobs = [
     width: 800,
   },
 
+  // ── Logo (blanco sobre transparente; header y footer son siempre oscuros) ──
+  { src: "LOGO-BE-LIKE-LINA.png", out: "logo/logo-blanco.webp", quality: 95 },
+
   // ── Iconos de marca ────────────────────────────────────────────────────
   { src: "Mujer 1-1.webp", out: "iconos/mujer.webp" },
   { src: "Pesa 1.webp", out: "iconos/pesa.webp" },

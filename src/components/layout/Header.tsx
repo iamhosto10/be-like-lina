@@ -77,7 +77,7 @@ export function Header() {
       )}
     >
       <div className="container-site flex h-16 items-center justify-between gap-6 md:h-20">
-        <Logo />
+        <Logo eager />
 
         <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex items-center gap-8">

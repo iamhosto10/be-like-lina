@@ -61,6 +61,7 @@ export const site = {
   /** Enlaces a la web actual (WordPress) mientras se migra. */
   external: {
     store: "https://belikelina.com/shop/",
+    services: "https://belikelina.com/our-services/",
     account: "https://belikelina.com/my-account/",
   },
 
