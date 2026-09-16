@@ -2,6 +2,13 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/*
+ * shadcn usa clases `dark:` en sus componentes. Las atamos a la clase `.dark`
+ * (que este sitio nunca pone) para que NO se activen con el modo oscuro del
+ * sistema operativo: aquí el tono lo decide cada sección con data-tone.
+ */
+@custom-variant dark (&:is(.dark *));
+
 /* ════════════════════════════════════════════════════════════════════════
    1 · PALETA DE MARCA — EL ÚNICO LUGAR DONDE SE CAMBIAN LOS COLORES
    ────────────────────────────────────────────────────────────────────────

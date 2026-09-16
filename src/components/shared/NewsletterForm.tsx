@@ -14,6 +14,8 @@ interface NewsletterFormProps {
   layout?: "inline" | "stacked";
   size?: "default" | "lg";
   className?: string;
+  /** Clases extra para el campo (p. ej. fondo blanco sobre sección oscura). */
+  inputClassName?: string;
 }
 
 const initialState: NewsletterState = { status: "idle" };
@@ -24,6 +26,7 @@ export function NewsletterForm({
   layout = "inline",
   size = "default",
   className,
+  inputClassName,
 }: NewsletterFormProps) {
   const [state, formAction, pending] = useActionState(subscribeToNewsletter, initialState);
   const inputId = `newsletter-${source}`;
@@ -54,7 +57,11 @@ export function NewsletterForm({
           required
           aria-invalid={state.status === "error" || undefined}
           aria-describedby={state.status === "error" ? messageId : undefined}
-          className={cn("bg-background/60", size === "lg" && "h-12 px-4 text-base md:text-base")}
+          className={cn(
+            "bg-background/60",
+            size === "lg" && "h-12 px-4 text-base md:text-base",
+            inputClassName,
+          )}
         />
         <Button type="submit" size={size} disabled={pending} className="shrink-0">
           {pending ? "Enviando…" : buttonLabel}
