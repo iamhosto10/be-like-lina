@@ -11,7 +11,7 @@ export const recipes: Recipe[] = [
     kind: "comida",
     summary: "Se prepara de noche, se come de día · 3 minutos",
     image: null,
-    href: "/#recetas",
+    href: "/recetas/bowl-de-avena-y-frutos-rojos",
   },
   {
     slug: "batido-verde-de-la-manana",
@@ -19,7 +19,7 @@ export const recipes: Recipe[] = [
     kind: "batido",
     summary: "Espinaca, banano y avena · 5 minutos",
     image: null,
-    href: "/#recetas",
+    href: "/recetas/batido-verde-de-la-manana",
   },
 ];
 
