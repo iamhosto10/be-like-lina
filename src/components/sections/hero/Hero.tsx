@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Dumbbell, Flame, Heart, Salad } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/shared/Section";
-import { VideoDialog } from "@/components/sections/hero/VideoDialog";
+import { HeroVideoButton } from "@/components/sections/hero/HeroVideoButton";
 import { hero } from "@/data/hero";
 import { site } from "@/data/site";
 
@@ -41,7 +41,9 @@ export function Hero() {
             <Button size="xl" nativeButton={false} render={<Link href={primaryCta.href} />}>
               {primaryCta.label}
             </Button>
-            {site.heroVideoUrl && <VideoDialog url={site.heroVideoUrl} label={videoCta.label} />}
+            {site.heroVideoUrl && (
+              <HeroVideoButton url={site.heroVideoUrl} label={videoCta.label} />
+            )}
           </div>
 
           <ul className="mt-10 grid max-w-[38rem] grid-cols-1 gap-6 border-t border-border pt-8 sm:grid-cols-3">

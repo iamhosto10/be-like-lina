@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generado por withCn en cada build (ver next.config.ts):
+    "cn-tables.mjs",
   ]),
 ]);
 

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withCn } from "cn/next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -10,4 +11,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+/*
+ * withCn compila en build las tablas de resolución de clases de `cn` a partir
+ * de las clases que realmente usa el proyecto, en vez de enviar las tablas
+ * completas de Tailwind al navegador.
+ */
+export default withCn(nextConfig, { content: ["src/**/*.{ts,tsx}"] });

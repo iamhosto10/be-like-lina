@@ -17,14 +17,11 @@ interface ProductCardProps {
  * (hoy en la tienda actual, donde vive el botón real de compra).
  */
 export function ProductCard({ product, sizes, className }: ProductCardProps) {
-  const label = product.variant ? `${product.name} · ${product.variant}` : product.name;
-
   return (
     <a
       href={externalProductUrl(product.externalSlug)}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Ver ${label} en la tienda`}
       className={cn(
         "group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-[transform,box-shadow] outline-none",
         "hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-3 focus-visible:ring-ring/50",
@@ -62,6 +59,7 @@ export function ProductCard({ product, sizes, className }: ProductCardProps) {
           )}
         </p>
         <p className="mt-auto text-base font-bold tabular-nums">{formatCOP(product.price)}</p>
+        <span className="sr-only">Ver en la tienda</span>
       </div>
     </a>
   );

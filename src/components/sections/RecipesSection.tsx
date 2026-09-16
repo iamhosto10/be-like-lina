@@ -13,7 +13,7 @@ function BookCoverPlaceholder({ title }: { title: string }) {
       className="relative aspect-[3/4] w-40 rotate-[6deg] rounded-l-sm rounded-r-xl bg-brand-ice px-5 py-6 text-brand-plum shadow-2xl shadow-black/40 md:w-44"
     >
       <span className="absolute inset-y-0 left-0 w-2 rounded-l-sm bg-brand-plum/20" />
-      <p className="text-[0.65rem] font-bold tracking-[0.2em] uppercase opacity-70">Recetario</p>
+      <p className="text-[0.65rem] font-bold tracking-[0.2em] uppercase">Recetario</p>
       <p className="mt-2 text-xl leading-tight font-extrabold tracking-tight">{title}</p>
     </div>
   );

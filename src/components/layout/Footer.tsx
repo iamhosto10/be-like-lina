@@ -7,7 +7,7 @@ import type { NavItem } from "@/types";
 
 function FooterLink({ item }: { item: NavItem }) {
   const className =
-    "text-muted-foreground hover:text-primary transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 rounded-sm";
+    "text-muted-foreground hover:text-primary inline-block rounded-sm py-1 transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
   return item.external ? (
     <a href={item.href} target="_blank" rel="noopener noreferrer" className={className}>
       {item.label}
@@ -44,7 +44,7 @@ export function Footer() {
           </div>
 
           <FooterColumn title={site.footer.quickLinksTitle}>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-1 text-sm">
               {quickLinks.map((item) => (
                 <li key={item.href}>
                   <FooterLink item={item} />
@@ -54,7 +54,7 @@ export function Footer() {
           </FooterColumn>
 
           <FooterColumn title={site.footer.legalTitle}>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-1 text-sm">
               {site.legal.map((item) => (
                 <li key={item.href}>
                   <FooterLink item={item} />
