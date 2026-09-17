@@ -12,10 +12,17 @@ export const site = {
   shortName: "BLL",
   tagline:
     "Entrenamientos inteligentes, nutrición real y mentalidad para transformar tu cuerpo y tu vida.",
+  /** Meta description (≤ 155 caracteres para que Google no la corte). */
   description:
-    "Lina Fuentes, entrenadora integral para la mujer, certificada en nutrición y entrenamiento. Planes personalizados, suplementos y recetas desde Valledupar para toda Colombia.",
+    "Lina Fuentes, entrenadora integral para la mujer. Planes de nutrición y entrenamiento personalizados, suplementos y recetas desde Valledupar, Colombia.",
+  /** Dominio definitivo. Mientras el sitio viva en otra URL no se indexa (ver lib/site-url.ts). */
   url: "https://belikelina.com",
   locale: "es-CO",
+
+  seo: {
+    /** Título del home en Google y al compartir (≤ 60 caracteres). */
+    title: "Be Like Lina · Entrenamiento y nutrición para mujeres",
+  },
 
   /** Título visible de cada sección del home, con o sin número según `showSectionNumbers`. */
   showSectionNumbers: true,
