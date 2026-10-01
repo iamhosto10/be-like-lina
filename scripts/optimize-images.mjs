@@ -95,7 +95,7 @@ for (const job of jobs) {
   pipeline =
     format === "jpeg"
       ? pipeline
-          .flatten({ background: "#241323" })
+          .flatten({ background: "#150915" })
           .jpeg({ quality: job.quality ?? 82, mozjpeg: true })
       : pipeline.webp({ quality: job.quality ?? 82, effort: 6 });
 

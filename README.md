@@ -26,7 +26,7 @@ Todos los colores del sitio salen de **un solo archivo**: [`src/app/globals.css`
 Tiene tres niveles y **solo se edita el primero**:
 
 ```
-1 · PALETA DE MARCA        --brand-pink: #ff93ce   ← aquí se cambian los colores
+1 · PALETA DE MARCA        --brand-pink: #ff93ce · --brand-night: #150915  ← aquí se cambian los colores
 2 · TOKENS SEMÁNTICOS      --primary: var(--brand-pink)   (por tono; no se tocan)
 3 · EXPOSICIÓN A TAILWIND  --color-primary: var(--primary) (genera bg-primary, etc.)
 ```

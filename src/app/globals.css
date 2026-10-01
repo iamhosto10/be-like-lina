@@ -23,10 +23,10 @@
   --brand-violet: #7a5af8; /* Violeta · acento puntual (icono del plan de entrenamiento) */
 
   /* Morados oscuros (fondos) */
-  --brand-night: #241323; /* fondo oscuro base · hero, tienda… */
-  --brand-wine: #36192f; /* fondo oscuro alterno · recetas, testimonios… */
-  --brand-elevated: #44203b; /* tarjetas sobre fondo oscuro */
-  --brand-deep: #1b0e1a; /* footer */
+  --brand-night: #150915; /* fondo oscuro base · hero, tienda… (elegido por la clienta) */
+  --brand-wine: #241323; /* fondo oscuro alterno · recetas, testimonios… */
+  --brand-elevated: #331830; /* tarjetas sobre fondo oscuro */
+  --brand-deep: #0d050d; /* footer */
 
   /* Claros (fondos de respiro) */
   --brand-ice: #fff0f8; /* Rosa Hielo · secciones claras */
@@ -36,11 +36,11 @@
   /* Texto */
   --brand-text-on-dark: #ffffff;
   --brand-text-on-dark-muted: #c4b2c1;
-  --brand-text-on-light: #241323;
+  --brand-text-on-light: #150915;
   --brand-text-on-light-muted: #6b6270;
 
   /* Bordes */
-  --brand-border-on-dark: #4a2c43;
+  --brand-border-on-dark: #3d2338;
   --brand-border-on-light: #ebd5e4;
 
   /* Utilidad */
