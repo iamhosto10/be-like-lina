@@ -54,18 +54,19 @@ const jobs = [
     quality: 82,
   },
 
-  // ── Productos (renders con fondo transparente) ─────────────────────────
-  { src: "Chocolate 1100x1100.webp", out: "productos/shaker-chocolate.webp", width: 800 },
-  { src: "Vainilla 1100x1100.webp", out: "productos/shaker-vainilla.webp", width: 800 },
-  { src: "Pre Entreno 1100x1100.webp", out: "productos/fishz.webp", width: 800 },
-  { src: "SANTTINA.webp", out: "productos/santtina.webp", width: 800 },
-  { src: "Batido Funcion 5.webp", out: "productos/recetario.webp", width: 800 },
-  // La stevia no tiene render propio: se recorta la botella del banner.
+  // ── Productos (renders de producto, 1:1) ───────────────────────────────
+  { src: "Productos/shaker-chocolate.webp", out: "productos/shaker-chocolate.webp", width: 900 },
+  { src: "Productos/shaker-vainilla.webp", out: "productos/shaker-vainilla.webp", width: 900 },
+  { src: "Productos/fishz.webp", out: "productos/fishz.webp", width: 900 },
+  { src: "Productos/santtina.webp", out: "productos/santtina.webp", width: 900 },
+  { src: "Productos/guia.webp", out: "productos/guia.webp", width: 900 },
+  { src: "Productos/recetario.webp", out: "productos/recetario.webp", width: 900 },
+  // La stevia no tiene render propio: se recorta la botella del banner (fondo claro).
   {
     src: "5 1600x901.webp",
     out: "productos/stevia.webp",
     crop: { left: 290, top: 0, width: 285, height: 901 },
-    width: 800,
+    width: 900,
   },
 
   // ── Logo (blanco sobre transparente; header y footer son siempre oscuros) ──

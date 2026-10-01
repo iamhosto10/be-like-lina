@@ -43,7 +43,7 @@ En desarrollo, `/design` muestra la paleta, la tipografía y cada tono con los c
 
 ```
 src/
-├── app/            layout, página de inicio, globals.css, iconos, robots, sitemap, llms.txt
+├── app/            layout, inicio, /tienda y /tienda/[slug], globals.css, robots, sitemap, llms.txt
 ├── components/
 │   ├── ui/         shadcn/ui (generados)
 │   ├── layout/     Header, MobileMenu, Footer, WhatsAppButton
@@ -60,7 +60,7 @@ Todo lo que es **dato** (textos, precios, enlaces, número de WhatsApp, menú) v
 
 ## Imágenes
 
-Las fotos fuente (originales y retocadas) están **fuera del repo**, en la carpeta padre. `pnpm images` las convierte a WebP en los tamaños necesarios y las deja en `public/images/`; falla si alguna supera 300 KB. El manifiesto está en [`scripts/optimize-images.mjs`](scripts/optimize-images.mjs).
+Las fotos fuente (originales, retocadas y los renders de producto de `Productos/`) están **fuera del repo**, en la carpeta padre. `pnpm images` las convierte a WebP en los tamaños necesarios y las deja en `public/images/`; falla si alguna supera 300 KB. El manifiesto está en [`scripts/optimize-images.mjs`](scripts/optimize-images.mjs).
 
 ## SEO y motores de IA
 
@@ -74,6 +74,13 @@ La URL absoluta del sitio se resuelve en el build ([`src/lib/site-url.ts`](src/l
 
 **El sitio solo se indexa cuando vive en su dominio definitivo** (`site.url`, hoy `https://belikelina.com`). En la URL de Vercel o en un subdominio de pruebas, cada página lleva `noindex` y `robots.txt` bloquea a todos los rastreadores, para no duplicar ni competir con la web actual. Al conectar el dominio en Vercel se activa solo; para forzar otra URL, define `NEXT_PUBLIC_SITE_URL` en las variables de entorno del proyecto.
 
+## Tienda
+
+- [`/tienda`](src/app/tienda/page.tsx): catálogo completo, agrupado en suplementos, guías y endulzantes.
+- [`/tienda/[slug]`](src/app/tienda/%5Bslug%5D/page.tsx): una ficha por producto (8 páginas estáticas) con foto, precio, beneficios, ficha técnica y productos relacionados.
+
+El botón **Comprar ahora** lleva al producto en belikelina.com, donde está el checkout de Mercado Pago; el secundario abre WhatsApp con el producto en el mensaje. Precios, textos y fichas viven en [`src/data/products.ts`](src/data/products.ts) y se reflejan a la vez en la página, en el JSON-LD, en el sitemap y en `llms.txt`.
+
 ## Estado
 
-Fase 1: página de inicio completa (hero, tienda, recetas, planes, blog, footer). Los productos enlazan a la tienda actual (belikelina.com) y los planes abren WhatsApp. Las páginas de artículos y recetas muestran «próximamente» (`noindex`) hasta que exista el contenido.
+Fase 1: página de inicio completa (hero, tienda, recetas, planes, blog, footer) más la tienda con ficha por producto. La compra se completa en belikelina.com y los planes abren WhatsApp. Las páginas de artículos y recetas muestran «próximamente» (`noindex`) hasta que exista el contenido.

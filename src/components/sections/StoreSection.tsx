@@ -2,7 +2,6 @@ import { Section } from "@/components/shared/Section";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { ProductCard } from "@/components/shared/ProductCard";
 import { featuredProducts } from "@/data/products";
-import { site } from "@/data/site";
 
 const DISCLAIMER =
   "Estos productos no son medicamentos. No superan las recomendaciones de consumo diario. Consulta a tu médico.";
@@ -14,7 +13,7 @@ export function StoreSection() {
         number={1}
         title="Tienda"
         titleId="tienda-titulo"
-        action={{ label: "Ver toda la tienda", href: site.external.store, external: true }}
+        action={{ label: "Ver toda la tienda", href: "/tienda" }}
       />
 
       {/*

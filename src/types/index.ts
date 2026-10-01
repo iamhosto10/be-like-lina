@@ -21,10 +21,16 @@ export interface ImageAsset {
 export type ProductCategory =
   "proteina" | "pre-entreno" | "antioxidante" | "endulzante" | "digital";
 
+/** Ficha técnica de la página de producto ("Presentación · 900 g"). */
+export interface ProductSpec {
+  label: string;
+  value: string;
+}
+
 export interface Product {
-  /** Identificador interno (futura ruta /tienda/[slug]). */
+  /** Identificador interno y ruta: /tienda/[slug]. */
   slug: string;
-  /** Slug del producto en la tienda actual (WordPress), para el enlace externo. */
+  /** Slug del producto en la tienda actual (WordPress), donde se completa la compra. */
   externalSlug: string;
   name: string;
   /** Variante corta para la tarjeta (p. ej. "Sabor chocolate"). */
@@ -34,7 +40,17 @@ export interface Product {
   price: number;
   /** Ficha de una línea para la tarjeta. */
   spec: string;
+  /** Frase de venta bajo el título en la página de producto. */
+  tagline: string;
+  /** Descripción larga, un párrafo por elemento. */
+  description: string[];
+  /** Lo que incluye o aporta, en viñetas. */
+  highlights: string[];
+  /** Tabla de datos (presentación, sabor, modo de uso…). */
+  specs: ProductSpec[];
   image: ImageAsset | null;
+  /** Fondo de la foto: define el color del marco de la imagen. */
+  imageTone: "dark" | "light";
   /** Se muestra en la rejilla del home. */
   featured: boolean;
   /** Orden de aparición. */

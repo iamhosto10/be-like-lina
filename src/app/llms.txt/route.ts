@@ -20,7 +20,7 @@ export function GET() {
     .sort((a, b) => a.order - b.order)
     .map((p) => {
       const name = p.variant ? `${p.name} (${p.variant})` : p.name;
-      return `- [${name}](${externalProductUrl(p.externalSlug)}): ${p.spec}. ${formatCOP(p.price)} COP`;
+      return `- [${name}](${siteUrl}/tienda/${p.slug}): ${p.spec}. ${formatCOP(p.price)} COP. Se compra en ${externalProductUrl(p.externalSlug)}`;
     });
 
   const planLines = plans.map(
@@ -63,7 +63,8 @@ ${socialLines.join("\n")}
 ## Páginas
 
 - [Inicio](${siteUrl}/): hero, tienda, recetas saludables, planes de entrenamiento y blog.
-- [Tienda actual](${site.external.store})
+- [Tienda](${siteUrl}/tienda): catálogo completo, con una ficha por producto.
+- [Tienda actual en WordPress](${site.external.store}): donde se completa la compra.
 - [Servicios](${site.external.services})
 `;
 

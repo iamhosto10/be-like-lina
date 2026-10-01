@@ -1,7 +1,17 @@
-import type { ItemList, Organization, Person, Product, WebSite } from "schema-dts";
+import type {
+  BreadcrumbList,
+  ItemList,
+  Organization,
+  Person,
+  Product,
+  Thing,
+  WebSite,
+} from "schema-dts";
 import { site } from "@/data/site";
 import { lina } from "@/data/lina";
-import { products } from "@/data/products";
+import { categoryLabels, sortedProducts } from "@/data/products";
+import { store } from "@/data/store";
+import type { Product as ProductData } from "@/types";
 import { plans } from "@/data/plans";
 import { externalProductUrl, whatsappUrl } from "@/lib/links";
 import { absoluteUrl, siteUrl } from "@/lib/site-url";
@@ -61,25 +71,86 @@ export const webSiteSchema: WebSite = {
   publisher: { "@id": ORG_ID },
 };
 
-/** Un `Product` por artículo del catálogo, con su oferta en pesos colombianos. */
-export const productSchemas: Product[] = products
-  .slice()
-  .sort((a, b) => a.order - b.order)
-  .map((p) => ({
+/** Esquema de un producto del catálogo. La URL es la ficha del sitio; la oferta apunta a donde se compra. */
+export function productSchema(p: ProductData): Product {
+  return {
     "@type": "Product",
     name: p.variant ? `${p.name} · ${p.variant}` : p.name,
-    description: p.spec,
+    description: p.tagline,
     ...(p.image && { image: absoluteUrl(p.image.src) }),
-    url: externalProductUrl(p.externalSlug),
+    url: absoluteUrl(`/tienda/${p.slug}`),
+    category: categoryLabels[p.category],
     brand: { "@id": ORG_ID },
     offers: {
       "@type": "Offer",
       price: p.price,
       priceCurrency: "COP",
+      availability: "https://schema.org/InStock",
       url: externalProductUrl(p.externalSlug),
       seller: { "@id": ORG_ID },
     },
-  }));
+  };
+}
+
+/** Un `Product` por artículo del catálogo, en el orden de la tienda. */
+export const productSchemas: Product[] = sortedProducts.map(productSchema);
+
+/** Migas de pan para buscadores (coincide con el componente `Breadcrumbs`). */
+function breadcrumbSchema(items: { name: string; path: string }[]): BreadcrumbList {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  };
+}
+
+/** Grafo de la página /tienda. */
+export const storePageSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": absoluteUrl("/tienda"),
+      name: `Tienda · ${site.name}`,
+      description: store.intro,
+      isPartOf: { "@id": WEBSITE_ID },
+      inLanguage: site.locale,
+      mainEntity: {
+        "@type": "ItemList",
+        name: "Catálogo Be Like Lina",
+        numberOfItems: productSchemas.length,
+        itemListElement: productSchemas.map((item, i) => ({
+          "@type": "ListItem" as const,
+          position: i + 1,
+          item,
+        })),
+      },
+    },
+    breadcrumbSchema([
+      { name: "Inicio", path: "/" },
+      { name: "Tienda", path: "/tienda" },
+    ]),
+  ],
+} satisfies { "@context": "https://schema.org"; "@graph": Thing[] };
+
+/** Grafo de una ficha de producto. */
+export function productPageSchema(p: ProductData) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      productSchema(p),
+      breadcrumbSchema([
+        { name: "Inicio", path: "/" },
+        { name: "Tienda", path: "/tienda" },
+        { name: p.variant ? `${p.name} · ${p.variant}` : p.name, path: `/tienda/${p.slug}` },
+      ]),
+    ],
+  } satisfies { "@context": "https://schema.org"; "@graph": Thing[] };
+}
 
 /** Los planes de coaching como servicios con precio. */
 export const planSchemas: Product[] = plans.map((plan) => ({

@@ -41,7 +41,7 @@ export const site = {
   /** Menú principal. Los anclas apuntan a las secciones del home mientras no existan páginas internas. */
   nav: [
     { label: "Inicio", href: "/" },
-    { label: "Tienda", href: "/#tienda" },
+    { label: "Tienda", href: "/tienda" },
     { label: "Recetas", href: "/#recetas" },
     { label: "Planes", href: "/#planes" },
     { label: "Blog", href: "/#blog" },

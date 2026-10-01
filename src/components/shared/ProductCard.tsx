@@ -1,34 +1,41 @@
+import Link from "next/link";
 import Image from "next/image";
 import { BookOpen } from "lucide-react";
 import { cn } from "cn";
 import { formatCOP } from "@/lib/format";
-import { externalProductUrl } from "@/lib/links";
 import type { Product } from "@/types";
 
 interface ProductCardProps {
   product: Product;
   /** `sizes` de next/image según la rejilla en la que se use. */
   sizes: string;
+  /** Carga inmediata: solo para las tarjetas visibles al entrar (candidatas a LCP). */
+  eager?: boolean;
   className?: string;
 }
 
 /**
- * Tarjeta de producto: toda la tarjeta es un enlace a la ficha del producto
- * (hoy en la tienda actual, donde vive el botón real de compra).
+ * Tarjeta de producto: toda la tarjeta enlaza a su página en /tienda/[slug],
+ * donde está la ficha completa y el botón de compra.
  */
-export function ProductCard({ product, sizes, className }: ProductCardProps) {
+export function ProductCard({ product, sizes, eager = false, className }: ProductCardProps) {
+  const darkPhoto = product.imageTone === "dark";
+
   return (
-    <a
-      href={externalProductUrl(product.externalSlug)}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={`/tienda/${product.slug}`}
       className={cn(
         "group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-[transform,box-shadow] outline-none",
         "hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-3 focus-visible:ring-ring/50",
         className,
       )}
     >
-      <div className="relative aspect-square w-full overflow-hidden bg-brand-ice">
+      <div
+        className={cn(
+          "relative aspect-square w-full overflow-hidden",
+          darkPhoto ? "bg-brand-night" : "bg-brand-ice",
+        )}
+      >
         {product.image ? (
           <Image
             src={product.image.src}
@@ -36,7 +43,12 @@ export function ProductCard({ product, sizes, className }: ProductCardProps) {
             width={product.image.width}
             height={product.image.height}
             sizes={sizes}
-            className="absolute inset-0 size-full object-contain p-4 transition-transform duration-300 group-hover:scale-[1.04]"
+            loading={eager ? "eager" : "lazy"}
+            fetchPriority={eager ? "high" : "auto"}
+            className={cn(
+              "absolute inset-0 size-full transition-transform duration-300 group-hover:scale-[1.04]",
+              darkPhoto ? "object-cover" : "object-contain p-4",
+            )}
           />
         ) : (
           <div
@@ -59,8 +71,8 @@ export function ProductCard({ product, sizes, className }: ProductCardProps) {
           )}
         </p>
         <p className="mt-auto text-base font-bold tabular-nums">{formatCOP(product.price)}</p>
-        <span className="sr-only">Ver en la tienda</span>
+        <span className="sr-only">Ver producto</span>
       </div>
-    </a>
+    </Link>
   );
 }
