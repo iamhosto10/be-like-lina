@@ -61,13 +61,7 @@ const jobs = [
   { src: "Productos/santtina.webp", out: "productos/santtina.webp", width: 900 },
   { src: "Productos/guia.webp", out: "productos/guia.webp", width: 900 },
   { src: "Productos/recetario.webp", out: "productos/recetario.webp", width: 900 },
-  // La stevia no tiene render propio: se recorta la botella del banner (fondo claro).
-  {
-    src: "5 1600x901.webp",
-    out: "productos/stevia.webp",
-    crop: { left: 290, top: 0, width: 285, height: 901 },
-    width: 900,
-  },
+  { src: "Productos/stevia.webp", out: "productos/stevia-250.webp", width: 900 },
 
   // ── Logo (blanco sobre transparente; header y footer son siempre oscuros) ──
   { src: "LOGO-BE-LIKE-LINA.png", out: "logo/logo-blanco.webp", quality: 95 },
