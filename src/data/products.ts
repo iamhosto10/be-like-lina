@@ -12,7 +12,7 @@ export const products: Product[] = [
     name: "Proteína Shaker",
     variant: "Sabor chocolate",
     category: "proteina",
-    price: 203000,
+    price: 220000,
     spec: "Aislada de suero · 900 g · con BCAAs y prebióticos",
     tagline: "Proteína limpia para recuperar después de entrenar.",
     description: [
@@ -47,7 +47,7 @@ export const products: Product[] = [
     name: "Proteína Shaker",
     variant: "Sabor vainilla",
     category: "proteina",
-    price: 203000,
+    price: 220000,
     spec: "Aislada de suero · 900 g · con BCAAs y prebióticos",
     tagline: "La misma proteína limpia, en sabor vainilla.",
     description: [
