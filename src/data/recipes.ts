@@ -11,10 +11,10 @@ export const recipeProducts = [
 
 /** Bloque «GRATIS» de la sección (imán de captación): un solo envío, sin suscripción. */
 export const freeRecipes = {
-  badge: "Gratis",
-  title: "Recibe gratis las recetas de Lina",
-  text: "Déjanos tu correo y te las enviamos de una vez. Es un solo envío, sin suscripción.",
-  buttonLabel: "Quiero las recetas gratis",
+  badge: "Gratis · Regalo de Lina",
+  title: "Cocina sano sin complicarte",
+  text: "Recibe gratis las recetas favoritas de Lina en tu correo. Un solo envío, sin suscripción.",
+  buttonLabel: "¡Las quiero gratis!",
   /** Texto de la portada ilustrada mientras no exista un mockup real. */
-  coverTitle: "Recetas de Lina",
+  coverTitle: "Las recetas favoritas de Lina",
 } as const;

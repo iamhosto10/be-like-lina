@@ -1,3 +1,4 @@
+import { Salad } from "lucide-react";
 import { Section } from "@/components/shared/Section";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { RecipeProductCard } from "@/components/shared/RecipeProductCard";
@@ -10,11 +11,16 @@ function BookCoverPlaceholder({ title }: { title: string }) {
   return (
     <div
       aria-hidden
-      className="relative aspect-[3/4] w-40 rotate-[6deg] rounded-l-sm rounded-r-xl bg-brand-ice px-5 py-6 text-brand-plum shadow-2xl shadow-black/40 md:w-44"
+      className="relative flex aspect-[3/4] w-44 rotate-[6deg] flex-col rounded-l-sm rounded-r-xl bg-brand-ice px-5 py-6 text-brand-plum shadow-2xl shadow-black/40 md:w-48"
     >
       <span className="absolute inset-y-0 left-0 w-2 rounded-l-sm bg-brand-plum/20" />
       <p className="text-[0.65rem] font-bold tracking-[0.2em] uppercase">Gratis</p>
       <p className="mt-2 text-xl leading-tight font-extrabold tracking-tight">{title}</p>
+      <span className="mt-4 h-0.5 w-10 rounded-full bg-brand-pink-deep" />
+      <div className="mt-auto flex items-end justify-between">
+        <span className="font-script text-2xl leading-none text-brand-pink-deep">Lina</span>
+        <Salad className="size-7 text-brand-plum/70" strokeWidth={1.5} />
+      </div>
     </div>
   );
 }
@@ -46,7 +52,7 @@ export function RecipesSection() {
         </ul>
 
         {/* Imán: recetas gratis, un solo envío */}
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-card text-card-foreground">
+        <div className="relative flex flex-col justify-center overflow-hidden rounded-2xl border border-border bg-card text-card-foreground">
           {/* Líneas decorativas */}
           <span
             aria-hidden
