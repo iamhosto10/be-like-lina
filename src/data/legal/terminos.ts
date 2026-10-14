@@ -43,7 +43,7 @@ export const terminosPage: LegalPageData = {
       type: "p",
       text: "Todo lo referente a envíos, entregas, devoluciones, derecho de retracto, derecho de reversión del pago, y garantías sobre los productos o servicios adquiridos en a través del Marketplace, se encuentran en el capítulo de “Política de Entregas y Devoluciones” que está publicada en la página web y puede ser consultada en el siguiente link [belikelina.com/pagos-envios-y-devoluciones](/pagos-envios-y-devoluciones). Se advierte que existen productos ofertados en el mencionado Marketplace que no cumplen con los presupuestos legislativos para la configuración del Derecho de Retracto, de conformidad con los parámetros descritos en el Estatuto del Consumidor.",
     },
-    { type: "contact", lines: ["BE LIKE LINA SAS", "3012156152", "clientes@belikelina.com"] },
+    { type: "contact", lines: ["BE LIKE LINA SAS", "3012156152", "ventas@belikelina.com"] },
   ],
   sections: [
     {
@@ -158,7 +158,7 @@ export const terminosPage: LegalPageData = {
         },
         {
           type: "p",
-          text: "El USUARIO responderá, en cualquier caso, por la veracidad de los datos facilitados. Además, BE LIKE LINA SAS podrá excluir de los servicios registrados a todo USUARIO que haya facilitado datos falsos, sin perjuicio de las demás acciones que procedan. Es por esto que cualquier USUARIO registrado puede actualizar, rectificar, remover, en cualquier momento sus datos mediante correo electrónico enviado a [clientes@belikelina.com](mailto:clientes@belikelina.com).",
+          text: "El USUARIO responderá, en cualquier caso, por la veracidad de los datos facilitados. Además, BE LIKE LINA SAS podrá excluir de los servicios registrados a todo USUARIO que haya facilitado datos falsos, sin perjuicio de las demás acciones que procedan. Es por esto que cualquier USUARIO registrado puede actualizar, rectificar, remover, en cualquier momento sus datos mediante correo electrónico enviado a [ventas@belikelina.com](mailto:ventas@belikelina.com).",
         },
       ],
     },
