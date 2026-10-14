@@ -27,7 +27,7 @@ export const siteUrl = resolveSiteUrl();
  */
 export const isIndexable = siteUrl === site.url;
 
-/** Convierte una ruta interna ("/images/lina/og.jpg") en URL absoluta. */
+/** Convierte una ruta interna ("/images/lina/og-compartir.jpg") en URL absoluta. */
 export function absoluteUrl(path: string): string {
   return new URL(path, `${siteUrl}/`).toString();
 }

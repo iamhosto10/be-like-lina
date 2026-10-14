@@ -58,13 +58,17 @@ src/
 
 Todo lo que es **dato** (textos, precios, enlaces, número de WhatsApp, menú) vive en `src/data/`. Todo lo que es **diseño** vive en `globals.css` y los componentes.
 
+## Imagen para compartir (WhatsApp, Facebook, X)
+
+La tarjeta de 1200×630 que aparece al compartir el link se **genera con código**: `pnpm og` crea `public/images/lina/og-compartir.jpg` (logo, titular del hero, foto de Lina) tomando los colores de `globals.css`. Para cambiar el texto o la foto, edita [`scripts/make-og.mjs`](scripts/make-og.mjs) y vuelve a correrlo. Si reemplazas la imagen, cámbiale también el nombre: WhatsApp y los optimizadores la cachean por URL.
+
 ## Imágenes
 
 Las fotos fuente (originales, retocadas y los renders de producto de `Productos/`) están **fuera del repo**, en la carpeta padre. `pnpm images` las convierte a WebP en los tamaños necesarios y las deja en `public/images/`; falla si alguna supera 300 KB. El manifiesto está en [`scripts/optimize-images.mjs`](scripts/optimize-images.mjs).
 
 ## SEO y motores de IA
 
-- **Metadatos** en [`src/app/layout.tsx`](src/app/layout.tsx): título, descripción, canonical, Open Graph y Twitter (imagen `public/images/lina/og.jpg`). Los textos salen de `site.seo` y `site.description` en [`src/data/site.ts`](src/data/site.ts).
+- **Metadatos** en [`src/app/layout.tsx`](src/app/layout.tsx): título, descripción, canonical, Open Graph y Twitter (imagen `public/images/lina/og-compartir.jpg`). Los textos salen de `site.seo` y `site.description` en [`src/data/site.ts`](src/data/site.ts).
 - **Datos estructurados (JSON-LD)**: `Organization`, `Person` (Lina) y `WebSite` en el layout; `ItemList` de productos y de planes en el home. Se generan en [`src/lib/schema.ts`](src/lib/schema.ts) a partir de `src/data`, así que cambiar un precio los actualiza. Validar en <https://validator.schema.org>.
 - **`/robots.txt`**, **`/sitemap.xml`** y **`/llms.txt`** (resumen del sitio en Markdown para asistentes de IA) se generan desde código en `src/app/`.
 

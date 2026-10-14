@@ -34,7 +34,7 @@ const jobs = [
     quality: 88,
   },
 
-  // ── Lina (Sobre Lina, avatar, Open Graph) ──────────────────────────────
+  // ── Lina (Sobre Lina, avatar). La imagen para compartir se genera con `pnpm og`. ──────────────────────────────
   { src: "Stitch/Retrato realista ChatGPT Sept 2 2026.png", out: "lina/retrato.webp", width: 1000 },
   {
     src: "Stitch/Retrato realista ChatGPT Sept 2 2026 (1).png",
@@ -42,16 +42,6 @@ const jobs = [
     width: 600,
     height: 600,
     fit: "cover",
-  },
-  {
-    src: "Stitch/Retrato realista ChatGPT Sept 2 2026 (2).png",
-    out: "lina/og.jpg",
-    width: 1200,
-    height: 630,
-    fit: "cover",
-    position: "top",
-    format: "jpeg",
-    quality: 82,
   },
 
   // ── Productos (renders de producto, 1:1) ───────────────────────────────

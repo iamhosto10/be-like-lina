@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { plans } from "@/data/plans";
 import { sortedProducts, storeGroups } from "@/data/products";
 import { store } from "@/data/store";
+import { shareImage } from "@/lib/legal";
 import { site } from "@/data/site";
 import { planListSchema, storePageSchema } from "@/lib/schema";
 
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     title: `Tienda · ${site.name}`,
     description: store.intro,
     url: "/tienda",
+    images: [shareImage],
   },
 };
 
