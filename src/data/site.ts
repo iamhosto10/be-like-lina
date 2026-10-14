@@ -52,12 +52,6 @@ export const site = {
     },
   ] satisfies NavItem[],
 
-  /** CTA principal del header y del hero. */
-  cta: {
-    label: "Empieza hoy",
-    href: "/#planes",
-  },
-
   socials: [
     { name: "Instagram", href: "https://www.instagram.com/be.like.lina/" },
     { name: "TikTok", href: "https://www.tiktok.com/@belikelina_" },
@@ -69,7 +63,6 @@ export const site = {
   external: {
     store: "https://belikelina.com/shop/",
     services: "https://belikelina.com/our-services/",
-    account: "https://belikelina.com/my-account/",
   },
 
   /** Páginas legales (hoy en el sitio actual). */

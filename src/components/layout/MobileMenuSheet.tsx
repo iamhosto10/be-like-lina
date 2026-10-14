@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { cn } from "cn";
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -77,15 +76,7 @@ export function MobileMenuSheet({ open, onOpenChange, activeHref }: MobileMenuSh
           </ul>
         </nav>
 
-        <div className="flex flex-col gap-5 border-t border-border px-6 py-6">
-          <Button
-            size="xl"
-            className="w-full"
-            nativeButton={false}
-            render={<Link href={site.cta.href} onClick={close} />}
-          >
-            {site.cta.label}
-          </Button>
+        <div className="border-t border-border px-6 py-6">
           <SocialLinks className="justify-center" />
         </div>
       </SheetContent>

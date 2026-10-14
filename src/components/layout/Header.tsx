@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UserRound } from "lucide-react";
 import { cn } from "cn";
-import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/shared/Logo";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { site } from "@/data/site";
@@ -117,29 +115,8 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-3">
-          <Button
-            size="lg"
-            className="hidden sm:inline-flex"
-            nativeButton={false}
-            render={<Link href={site.cta.href} />}
-          >
-            {site.cta.label}
-          </Button>
-          <a
-            href={site.external.account}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Mi cuenta"
-            className={cn(
-              "hidden size-10 items-center justify-center rounded-full border border-foreground/40 text-foreground transition-colors hover:border-primary hover:text-primary sm:inline-flex",
-              "outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-            )}
-          >
-            <UserRound className="size-5" aria-hidden />
-          </a>
-          <MobileMenu activeHref={activeHref} />
-        </div>
+        {/* En escritorio no hay nada más a la derecha: el menú queda alineado al borde. */}
+        <MobileMenu activeHref={activeHref} />
       </div>
     </header>
   );
