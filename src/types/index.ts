@@ -95,3 +95,44 @@ export interface Post {
   image: ImageAsset | null;
   href: string;
 }
+
+/* ── Páginas legales y preguntas frecuentes ─────────────────────────────── */
+
+/**
+ * Bloque de contenido de una página de texto. El texto admite **negrita**
+ * y [etiqueta](enlace) en línea (ver `RichText`).
+ */
+export type LegalBlock =
+  | { type: "p"; text: string }
+  | { type: "subheading"; text: string }
+  | { type: "ul"; items: string[] }
+  | { type: "ol"; items: string[] }
+  | { type: "contact"; lines: string[] };
+
+export interface LegalSection {
+  /** Id para el ancla y el índice (p. ej. "autorizaciones"). */
+  id: string;
+  title: string;
+  /** Número visible ("1", "15"); si falta, el título va sin número. */
+  number?: number;
+  blocks: LegalBlock[];
+}
+
+export interface LegalPageData {
+  /** Ruta: /{slug}. */
+  slug: string;
+  title: string;
+  /** Meta description. */
+  description: string;
+  /** Texto de entrada bajo el título (opcional). */
+  intro?: string;
+  /** Bloques previos a la primera sección (preámbulo). */
+  preamble?: LegalBlock[];
+  sections: LegalSection[];
+}
+
+export interface FaqItem {
+  question: string;
+  /** Respuesta en bloques (párrafos y listas). */
+  answer: LegalBlock[];
+}

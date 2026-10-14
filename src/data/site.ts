@@ -65,28 +65,12 @@ export const site = {
     services: "https://belikelina.com/our-services/",
   },
 
-  /** Páginas legales (hoy en el sitio actual). */
+  /** Páginas legales y de ayuda (rutas propias; el contenido vive en src/data/legal). */
   legal: [
-    {
-      label: "Términos y condiciones",
-      href: "https://belikelina.com/terminos-y-condiciones/",
-      external: true,
-    },
-    {
-      label: "Política de privacidad",
-      href: "https://belikelina.com/privacy-policy/",
-      external: true,
-    },
-    {
-      label: "Pagos, envíos y devoluciones",
-      href: "https://belikelina.com/refund_returns/",
-      external: true,
-    },
-    {
-      label: "Preguntas frecuentes",
-      href: "https://belikelina.com/elements/accordions/",
-      external: true,
-    },
+    { label: "Términos y condiciones", href: "/terminos-y-condiciones" },
+    { label: "Política de privacidad", href: "/politica-de-privacidad" },
+    { label: "Pagos, envíos y devoluciones", href: "/pagos-envios-y-devoluciones" },
+    { label: "Preguntas frecuentes", href: "/preguntas-frecuentes" },
   ] satisfies NavItem[],
 
   footer: {

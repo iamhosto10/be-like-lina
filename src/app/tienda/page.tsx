@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { Section } from "@/components/shared/Section";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { ProductGrid } from "@/components/shared/ProductGrid";
+import { PlanCard } from "@/components/shared/PlanCard";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { plans } from "@/data/plans";
 import { sortedProducts, storeGroups } from "@/data/products";
 import { store } from "@/data/store";
 import { site } from "@/data/site";
-import { storePageSchema } from "@/lib/schema";
+import { planListSchema, storePageSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Tienda",
@@ -57,11 +59,35 @@ export default function StorePage() {
         );
       })}
 
+      {/* Servicios: los mismos dos planes del home, como sección adicional bajo los productos. */}
+      <Section
+        tone="wine"
+        id="servicios"
+        aria-labelledby="servicios-titulo"
+        className="py-12 md:py-16"
+      >
+        <h2
+          id="servicios-titulo"
+          className="text-xl font-bold tracking-tight uppercase md:text-2xl"
+        >
+          Servicios
+        </h2>
+        <p className="mt-1.5 mb-7 text-sm text-muted-foreground md:text-base">
+          Planes personalizados con Lina. Elige el que se adapta a tus objetivos.
+        </p>
+        <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+          {plans.map((plan) => (
+            <PlanCard key={plan.slug} plan={plan} />
+          ))}
+        </div>
+      </Section>
+
       <Section tone="deep" className="py-10 md:py-12">
         <p className="text-xs text-muted-foreground">{store.disclaimer}</p>
       </Section>
 
       <JsonLd data={storePageSchema} />
+      <JsonLd data={{ "@context": "https://schema.org", "@graph": [planListSchema] }} />
     </>
   );
 }

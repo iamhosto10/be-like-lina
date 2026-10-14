@@ -1,5 +1,6 @@
 import type {
   BreadcrumbList,
+  FAQPage,
   ItemList,
   Organization,
   Person,
@@ -11,7 +12,8 @@ import { site } from "@/data/site";
 import { lina } from "@/data/lina";
 import { categoryLabels, sortedProducts } from "@/data/products";
 import { store } from "@/data/store";
-import type { Product as ProductData } from "@/types";
+import { stripRichText } from "@/components/legal/RichText";
+import type { FaqItem, LegalBlock, Product as ProductData } from "@/types";
 import { plans } from "@/data/plans";
 import { externalProductUrl, whatsappUrl } from "@/lib/links";
 import { absoluteUrl, siteUrl } from "@/lib/site-url";
@@ -190,3 +192,60 @@ export const planListSchema: ItemList = {
     item,
   })),
 };
+
+/** Grafo de una página de texto (términos, privacidad, envíos…). */
+export function legalPageSchema(page: { title: string; description: string; path: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": absoluteUrl(page.path),
+        name: page.title,
+        description: page.description,
+        url: absoluteUrl(page.path),
+        inLanguage: site.locale,
+        isPartOf: { "@id": WEBSITE_ID },
+        publisher: { "@id": ORG_ID },
+      },
+      breadcrumbSchema([
+        { name: "Inicio", path: "/" },
+        { name: page.title, path: page.path },
+      ]),
+    ],
+  } satisfies { "@context": "https://schema.org"; "@graph": Thing[] };
+}
+
+function blocksToText(blocks: LegalBlock[]): string {
+  return blocks
+    .map((b) => {
+      if (b.type === "p" || b.type === "subheading") return stripRichText(b.text);
+      if (b.type === "ul" || b.type === "ol") return b.items.map(stripRichText).join(" · ");
+      return b.lines.join(" ");
+    })
+    .join(" ");
+}
+
+/** Preguntas y respuestas para los resultados enriquecidos y los asistentes de IA. */
+export function faqPageSchema(items: FaqItem[], path: string) {
+  const faq: FAQPage = {
+    "@type": "FAQPage",
+    "@id": absoluteUrl(path),
+    inLanguage: site.locale,
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: blocksToText(item.answer) },
+    })),
+  };
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      faq,
+      breadcrumbSchema([
+        { name: "Inicio", path: "/" },
+        { name: "Preguntas frecuentes", path: path },
+      ]),
+    ],
+  } satisfies { "@context": "https://schema.org"; "@graph": Thing[] };
+}

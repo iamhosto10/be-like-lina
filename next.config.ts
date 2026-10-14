@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
     // Calidades permitidas. 75 por defecto; 85 para el hero (LCP).
     qualities: [75, 85],
   },
+  // URLs del WordPress anterior → rutas nuevas, para no perder el posicionamiento al migrar el dominio.
+  async redirects() {
+    return [
+      { source: "/privacy-policy", destination: "/politica-de-privacidad", permanent: true },
+      { source: "/refund_returns", destination: "/pagos-envios-y-devoluciones", permanent: true },
+      { source: "/elements/accordions", destination: "/preguntas-frecuentes", permanent: true },
+    ];
+  },
 };
 
 /*

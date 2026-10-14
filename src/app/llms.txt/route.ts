@@ -66,6 +66,10 @@ ${socialLines.join("\n")}
 - [Tienda](${siteUrl}/tienda): catálogo completo, con una ficha por producto.
 - [Tienda actual en WordPress](${site.external.store}): donde se completa la compra.
 - [Servicios](${site.external.services})
+
+## Políticas y ayuda
+
+${site.legal.map((page) => `- [${page.label}](${siteUrl}${page.href})`).join("\n")}
 `;
 
   return new Response(body, {

@@ -81,6 +81,10 @@ La URL absoluta del sitio se resuelve en el build ([`src/lib/site-url.ts`](src/l
 
 El botón **Comprar ahora** lleva al producto en belikelina.com, donde está el checkout de Mercado Pago; el secundario abre WhatsApp con el producto en el mensaje. Precios, textos y fichas viven en [`src/data/products.ts`](src/data/products.ts) y se reflejan a la vez en la página, en el JSON-LD, en el sitemap y en `llms.txt`.
 
+## Páginas legales y preguntas frecuentes
+
+Cuatro rutas propias, con el texto copiado del sitio anterior: `/terminos-y-condiciones`, `/politica-de-privacidad`, `/pagos-envios-y-devoluciones` y `/preguntas-frecuentes`. El contenido son datos tipados en [`src/data/legal/`](src/data/legal) (se edita ahí, no en JSX) y lo pintan `LegalDocument` (índice lateral + secciones) y `FaqList` (acordeón con `<details>` nativo). El footer sale de `site.legal`. Las URLs del WordPress anterior (`/privacy-policy`, `/refund_returns`, `/elements/accordions`) redirigen con 308 desde `next.config.ts`.
+
 ## Estado
 
 Fase 1: página de inicio completa (hero, tienda, recetas, planes, blog, footer) más la tienda con ficha por producto. La compra se completa en belikelina.com y los planes abren WhatsApp. Las páginas de artículos y recetas muestran «próximamente» (`noindex`) hasta que exista el contenido.
