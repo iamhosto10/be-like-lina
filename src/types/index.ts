@@ -76,16 +76,6 @@ export interface Plan {
   whatsappMessage: string;
 }
 
-export interface Recipe {
-  slug: string;
-  title: string;
-  kind: "comida" | "batido";
-  /** Ingredientes principales · tiempo. */
-  summary: string;
-  image: ImageAsset | null;
-  href: string;
-}
-
 export type PostCategory = "Nutrición" | "Entrenamiento" | "Recetas" | "Mentalidad";
 
 export interface Post {

@@ -35,5 +35,9 @@ export async function subscribeToNewsletter(
   // TODO(fase 2): integrar proveedor real.
   console.info("[newsletter] nueva suscripción", parsed.data);
 
-  return { status: "success", message: "¡Listo! Revisa tu correo (y la carpeta de spam)." };
+  const message =
+    parsed.data.source === "recetas"
+      ? "¡Listo! Te enviaremos las recetas de Lina a tu correo (revisa también el spam)."
+      : "¡Listo! Revisa tu correo (y la carpeta de spam).";
+  return { status: "success", message };
 }

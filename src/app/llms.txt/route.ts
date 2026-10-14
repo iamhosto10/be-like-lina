@@ -2,7 +2,7 @@ import { site } from "@/data/site";
 import { lina } from "@/data/lina";
 import { products } from "@/data/products";
 import { plans } from "@/data/plans";
-import { freeRecipeBook } from "@/data/recipes";
+import { freeRecipes } from "@/data/recipes";
 import { formatCOP } from "@/lib/format";
 import { externalProductUrl, whatsappUrl } from "@/lib/links";
 import { siteUrl } from "@/lib/site-url";
@@ -52,7 +52,7 @@ Compra online en ${site.external.store} (pago con Mercado Pago, envíos a toda C
 
 ## Recursos gratuitos
 
-- ${freeRecipeBook.title}: ${freeRecipeBook.text} Se recibe por correo suscribiéndose en ${siteUrl}/#recetas
+- ${freeRecipes.title}: ${freeRecipes.text} Se pide dejando el correo en ${siteUrl}/#recetas
 
 ## Contacto
 

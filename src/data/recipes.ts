@@ -1,33 +1,20 @@
-import type { Recipe } from "@/types";
-
 /**
- * Recetas gratis del home. Son muestra: enganchan y llevan al Recetario de pago.
- * PENDIENTE: escribir el contenido y hacer las fotos (hoy `image: null` → placeholder).
+ * Sección «Recetas saludables» del home.
+ *
+ * Las dos tarjetas son productos digitales reales de la tienda (sus datos, foto y
+ * precio salen de `products.ts`); aquí solo se elige cuáles y qué etiqueta llevan.
  */
-export const recipes: Recipe[] = [
-  {
-    slug: "bowl-de-avena-y-frutos-rojos",
-    title: "Bowl de avena nocturna con frutos rojos",
-    kind: "comida",
-    summary: "Se prepara de noche, se come de día · 3 minutos",
-    image: null,
-    href: "/recetas/bowl-de-avena-y-frutos-rojos",
-  },
-  {
-    slug: "batido-verde-de-la-manana",
-    title: "Batido verde para empezar el día",
-    kind: "batido",
-    summary: "Espinaca, banano y avena · 5 minutos",
-    image: null,
-    href: "/recetas/batido-verde-de-la-manana",
-  },
-];
+export const recipeProducts = [
+  { slug: "guia-alimentacion-saludable", label: "Guía digital" },
+  { slug: "recetario-batidos", label: "Recetario digital" },
+] as const;
 
-/** Bloque "GRATIS" de la sección de recetas (imán de captación). */
-export const freeRecipeBook = {
+/** Bloque «GRATIS» de la sección (imán de captación): un solo envío, sin suscripción. */
+export const freeRecipes = {
   badge: "Gratis",
-  title: "Recetario semanal de comida saludable",
-  text: "Recibe cada semana un recetario con ideas saludables y prácticas.",
-  buttonLabel: "Quiero recibirlo gratis",
-  image: null as Recipe["image"], // Pendiente: mockup del recetario.
-};
+  title: "Recibe gratis las recetas de Lina",
+  text: "Déjanos tu correo y te las enviamos de una vez. Es un solo envío, sin suscripción.",
+  buttonLabel: "Quiero las recetas gratis",
+  /** Texto de la portada ilustrada mientras no exista un mockup real. */
+  coverTitle: "Recetas de Lina",
+} as const;

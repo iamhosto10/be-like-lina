@@ -50,7 +50,7 @@ src/
 │   ├── sections/   Hero, StoreSection, RecipesSection, PlansSection, BlogSection
 │   ├── seo/        JsonLd
 │   └── shared/     Section, SectionHeader, tarjetas, NewsletterForm, Logo…
-├── data/           site.ts (config), products, plans, recipes, posts, hero, lina
+├── data/           site.ts (config), products, plans, recipes (sección de recetas), posts, hero, lina
 ├── actions/        Server Actions (newsletter)
 ├── lib/            formatCOP, enlaces de WhatsApp, URL base, JSON-LD
 └── types/

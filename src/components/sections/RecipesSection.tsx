@@ -1,11 +1,11 @@
-import Image from "next/image";
 import { Section } from "@/components/shared/Section";
 import { SectionHeader } from "@/components/shared/SectionHeader";
-import { RecipeCard } from "@/components/shared/RecipeCard";
+import { RecipeProductCard } from "@/components/shared/RecipeProductCard";
 import { NewsletterForm } from "@/components/shared/NewsletterForm";
-import { recipes, freeRecipeBook } from "@/data/recipes";
+import { getProduct } from "@/data/products";
+import { freeRecipes, recipeProducts } from "@/data/recipes";
 
-/** Portada de libro en CSS mientras no exista el mockup real del recetario. */
+/** Portada de libro en CSS mientras no exista el mockup real de las recetas. */
 function BookCoverPlaceholder({ title }: { title: string }) {
   return (
     <div
@@ -13,14 +13,14 @@ function BookCoverPlaceholder({ title }: { title: string }) {
       className="relative aspect-[3/4] w-40 rotate-[6deg] rounded-l-sm rounded-r-xl bg-brand-ice px-5 py-6 text-brand-plum shadow-2xl shadow-black/40 md:w-44"
     >
       <span className="absolute inset-y-0 left-0 w-2 rounded-l-sm bg-brand-plum/20" />
-      <p className="text-[0.65rem] font-bold tracking-[0.2em] uppercase">Recetario</p>
+      <p className="text-[0.65rem] font-bold tracking-[0.2em] uppercase">Gratis</p>
       <p className="mt-2 text-xl leading-tight font-extrabold tracking-tight">{title}</p>
     </div>
   );
 }
 
 export function RecipesSection() {
-  const { badge, title, text, buttonLabel, image } = freeRecipeBook;
+  const { badge, title, text, buttonLabel, coverTitle } = freeRecipes;
 
   return (
     <Section tone="wine" id="recetas" aria-labelledby="recetas-titulo">
@@ -32,19 +32,23 @@ export function RecipesSection() {
       />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_1.05fr] lg:gap-8">
-        {/* Recetas gratis */}
+        {/* Productos digitales de recetas: cada tarjeta lleva a su página de compra */}
         <ul
           className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2"
-          aria-label="Recetas"
+          aria-label="Guías y recetarios"
         >
-          {recipes.map((recipe) => (
-            <li key={recipe.slug}>
-              <RecipeCard recipe={recipe} className="h-full" />
-            </li>
-          ))}
+          {recipeProducts.map(({ slug, label }) => {
+            const product = getProduct(slug);
+            if (!product) return null;
+            return (
+              <li key={slug}>
+                <RecipeProductCard product={product} label={label} className="h-full" />
+              </li>
+            );
+          })}
         </ul>
 
-        {/* Imán: recetario semanal gratis */}
+        {/* Imán: recetas gratis, un solo envío */}
         <div className="relative overflow-hidden rounded-2xl border border-border bg-card text-card-foreground">
           {/* Líneas decorativas */}
           <span
@@ -74,18 +78,7 @@ export function RecipesSection() {
             </div>
 
             <div className="flex justify-center md:justify-end">
-              {image ? (
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={image.width}
-                  height={image.height}
-                  sizes="(min-width: 768px) 12rem, 10rem"
-                  className="w-40 rotate-[6deg] drop-shadow-2xl md:w-48"
-                />
-              ) : (
-                <BookCoverPlaceholder title={title} />
-              )}
+              <BookCoverPlaceholder title={coverTitle} />
             </div>
           </div>
         </div>
