@@ -31,12 +31,9 @@ export function RecipesSection() {
         titleId="recetas-titulo"
       />
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_1.05fr] lg:gap-8">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.05fr] lg:gap-8">
         {/* Productos digitales de recetas: cada tarjeta lleva a su página de compra */}
-        <ul
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2"
-          aria-label="Guías y recetarios"
-        >
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2" aria-label="Guías y recetarios">
           {recipeProducts.map(({ slug, label }) => {
             const product = getProduct(slug);
             if (!product) return null;

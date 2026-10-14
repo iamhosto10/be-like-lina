@@ -17,11 +17,12 @@ export function StoreSection() {
       />
 
       {/*
-        Móvil: carrusel horizontal con scroll-snap (sin JS).
+        Móvil: carrusel horizontal con scroll-snap (sin JS). `contain-paint` evita que su
+        contenido ancho agrande el viewport en navegadores móviles.
         Tablet: rejilla de 3. Escritorio: rejilla de 6, como el mockup.
       */}
       <ul
-        className="-mx-5 flex snap-x snap-mandatory scroll-pl-5 [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-6 [&::-webkit-scrollbar]:hidden"
+        className="-mx-5 flex snap-x snap-mandatory scroll-pl-5 [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-2 contain-paint sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 sm:contain-none lg:grid-cols-6 [&::-webkit-scrollbar]:hidden"
         aria-label="Productos destacados"
       >
         {featuredProducts.map((product) => (

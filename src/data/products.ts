@@ -135,7 +135,7 @@ export const products: Product[] = [
       { label: "Entrega", value: "Después de confirmar el pago" },
     ],
     image: {
-      src: "/images/productos/guia.webp",
+      src: "/images/productos/guia-portada.webp",
       alt: "Portada de la Guía de Alimentación Saludable de Be Like Lina, con un plato de pollo, brócoli y aguacate",
       width: 900,
       height: 900,

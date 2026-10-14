@@ -18,7 +18,7 @@ const SRC = path.resolve(__dirname, "../..");
 const OUT = path.resolve(__dirname, "../public/images");
 const BUDGET_KB = 300;
 
-/** @type {Array<{src:string, out:string, width?:number, height?:number, fit?:"cover"|"inside", position?:string, crop?:{left:number,top:number,width:number,height:number}, format?:"webp"|"jpeg", quality?:number}>} */
+/** @type {Array<{src:string, out:string, width?:number, height?:number, fit?:"cover"|"inside", position?:string, crop?:{left:number,top:number,width:number,height:number}, blurFill?:boolean, format?:"webp"|"jpeg", quality?:number}>} */
 const jobs = [
   // ── Hero ───────────────────────────────────────────────────────────────
   { src: "Stitch/ChatGPT Imagen Sept 2 2026 Edición.png", out: "hero/lina-full.webp", width: 1200 },
@@ -59,7 +59,9 @@ const jobs = [
   { src: "Productos/shaker-vainilla.webp", out: "productos/shaker-vainilla.webp", width: 900 },
   { src: "Productos/fishz.webp", out: "productos/fishz.webp", width: 900 },
   { src: "Productos/santtina.webp", out: "productos/santtina.webp", width: 900 },
-  { src: "Productos/guia.webp", out: "productos/guia.webp", width: 900 },
+  // La portada es vertical y trae márgenes transparentes: se recorta y se centra sobre
+  // su propio fondo difuminado, en vez de dejar franjas planas a los lados.
+  { src: "Productos/guia.webp", out: "productos/guia-portada.webp", width: 900, blurFill: true },
   { src: "Productos/recetario.webp", out: "productos/recetario.webp", width: 900 },
   { src: "Productos/stevia.webp", out: "productos/stevia-250.webp", width: 900 },
 
@@ -81,6 +83,17 @@ for (const job of jobs) {
   await mkdir(path.dirname(output), { recursive: true });
 
   let pipeline = sharp(input);
+  if (job.blurFill) {
+    const size = job.width;
+    const trimmed = await sharp(input).trim().toBuffer();
+    const backdrop = await sharp(trimmed)
+      .resize(size, size, { fit: "cover" })
+      .blur(40)
+      .modulate({ brightness: 0.3, saturation: 0.35 })
+      .toBuffer();
+    const front = await sharp(trimmed).resize(size, size, { fit: "inside" }).toBuffer();
+    pipeline = sharp(backdrop).composite([{ input: front, gravity: "centre" }]);
+  }
   if (job.crop) pipeline = pipeline.extract(job.crop);
   if (job.width || job.height) {
     pipeline = pipeline.resize({
