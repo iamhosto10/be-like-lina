@@ -3,8 +3,29 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "cn";
 import { site } from "@/data/site";
 
+const ROMAN: [number, string][] = [
+  [10, "X"],
+  [9, "IX"],
+  [5, "V"],
+  [4, "IV"],
+  [1, "I"],
+];
+
+/** 1 → "I", 4 → "IV", 9 → "IX"… (las secciones del home no pasan de 10). */
+function toRoman(n: number): string {
+  let rest = n;
+  let out = "";
+  for (const [value, symbol] of ROMAN) {
+    while (rest >= value) {
+      out += symbol;
+      rest -= value;
+    }
+  }
+  return out;
+}
+
 interface SectionHeaderProps {
-  /** Número de sección del home (se muestra si `site.showSectionNumbers`). */
+  /** Número de sección del home; se muestra en romanos si `site.showSectionNumbers`. */
   number?: number;
   title: string;
   subtitle?: string;
@@ -36,7 +57,7 @@ export function SectionHeader({
     >
       <div>
         <h2 id={titleId} className="text-2xl font-bold tracking-tight uppercase md:text-3xl">
-          {showNumber && <span aria-hidden>{number}. </span>}
+          {showNumber && <span aria-hidden>{toRoman(number)}. </span>}
           {title}
         </h2>
         {subtitle && (
