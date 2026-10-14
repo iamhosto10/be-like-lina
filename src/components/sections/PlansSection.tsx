@@ -12,7 +12,7 @@ export function PlansSection() {
         title="Planes de entrenamiento"
         subtitle="Elige el plan que se adapta a tus objetivos."
         titleId="planes-titulo"
-        action={{ label: "Ver todos los planes", href: site.external.services, external: true }}
+        action={{ label: "Ver todos los planes", href: "/tienda#servicios" }}
       />
 
       <ul className="grid gap-5 md:grid-cols-2 md:gap-6" aria-label="Planes">

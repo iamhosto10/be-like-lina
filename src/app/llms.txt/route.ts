@@ -65,7 +65,7 @@ ${socialLines.join("\n")}
 - [Inicio](${siteUrl}/): hero, tienda, recetas saludables, planes de entrenamiento y blog.
 - [Tienda](${siteUrl}/tienda): catálogo completo, con una ficha por producto.
 - [Tienda actual en WordPress](${site.external.store}): donde se completa la compra.
-- [Servicios](${site.external.services})
+- [Servicios y planes](${siteUrl}/tienda#servicios): Plan Nutricional y Programa de Entrenamiento.
 
 ## Políticas y ayuda
 
