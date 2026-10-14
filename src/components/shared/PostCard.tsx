@@ -1,24 +1,26 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Apple, ArrowRight, Brain, CupSoda, Dumbbell } from "lucide-react";
 import { cn } from "cn";
-import type { Post, PostCategory } from "@/types";
+import { SanityImage } from "@/components/blog/SanityImage";
+import { postCategories } from "@/data/blog";
+import type { PostCategoryKey, PostSummary } from "@/types";
 
 interface PostCardProps {
-  post: Post;
+  post: PostSummary;
   className?: string;
 }
 
-const categoryIcon: Record<PostCategory, typeof Apple> = {
-  Nutrición: Apple,
-  Entrenamiento: Dumbbell,
-  Recetas: CupSoda,
-  Mentalidad: Brain,
+const categoryIcon: Record<PostCategoryKey, typeof Apple> = {
+  nutricion: Apple,
+  entrenamiento: Dumbbell,
+  recetas: CupSoda,
+  mentalidad: Brain,
 };
 
 /** Tarjeta de artículo: imagen apaisada, categoría, título y «Leer más». Toda la tarjeta es enlace. */
 export function PostCard({ post, className }: PostCardProps) {
   const Icon = categoryIcon[post.category];
+  const { label } = postCategories[post.category];
 
   return (
     <article
@@ -28,14 +30,13 @@ export function PostCard({ post, className }: PostCardProps) {
       )}
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand-elevated">
-        {post.image ? (
-          <Image
-            src={post.image.src}
-            alt={post.image.alt}
-            width={post.image.width}
-            height={post.image.height}
+        {post.cover ? (
+          <SanityImage
+            image={post.cover.image}
+            alt={post.cover.alt}
+            fill
             sizes="(min-width: 1024px) 23vw, (min-width: 640px) 46vw, 90vw"
-            className="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
         ) : (
           <div
@@ -48,12 +49,10 @@ export function PostCard({ post, className }: PostCardProps) {
       </div>
 
       <div className="flex flex-1 flex-col gap-2.5 p-5">
-        <p className="text-[0.7rem] font-bold tracking-[0.15em] text-primary uppercase">
-          {post.category}
-        </p>
+        <p className="text-[0.7rem] font-bold tracking-[0.15em] text-primary uppercase">{label}</p>
         <h3 className="text-base leading-snug font-bold">
           <Link
-            href={post.href}
+            href={`/blog/${post.slug}`}
             className="rounded-sm outline-none after:absolute after:inset-0 after:content-[''] focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             {post.title}

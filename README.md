@@ -18,6 +18,8 @@ pnpm dev          # http://localhost:3000
 | `pnpm check`                | `lint` + `typecheck` + `format:check`, todo en uno          |
 | `pnpm format`               | Prettier sobre todo el proyecto                             |
 | `pnpm images`               | Optimiza las imágenes fuente a `public/images/` (ver abajo) |
+| `pnpm og`                   | Regenera la imagen para compartir (favicon sobre el fondo)  |
+| `pnpm studio:sync`          | Copia los productos de la tienda al Studio de Sanity        |
 
 ## Cómo cambiar los colores
 
@@ -77,6 +79,21 @@ Las fotos fuente (originales, retocadas y los renders de producto de `Productos/
 La URL absoluta del sitio se resuelve en el build ([`src/lib/site-url.ts`](src/lib/site-url.ts)): `NEXT_PUBLIC_SITE_URL` si existe → el dominio de producción de Vercel → `localhost`.
 
 **El sitio solo se indexa cuando vive en su dominio definitivo** (`site.url`, hoy `https://belikelina.com`). En la URL de Vercel o en un subdominio de pruebas, cada página lleva `noindex` y `robots.txt` bloquea a todos los rastreadores, para no duplicar ni competir con la web actual. Al conectar el dominio en Vercel se activa solo; para forzar otra URL, define `NEXT_PUBLIC_SITE_URL` en las variables de entorno del proyecto.
+
+## Blog con Sanity
+
+Los artículos se escriben en **Sanity** (CMS) y todos usan la misma plantilla
+([`PostArticle`](src/components/blog/PostArticle.tsx)): portada, texto enriquecido, productos relacionados
+de la tienda y un botón de WhatsApp propio por artículo. El Studio está en [`studio/`](studio) y su guía de
+configuración (proyecto, tokens, webhook, variables de entorno) en [`studio/README.md`](studio/README.md).
+
+- **Sin configurar, el sitio funciona igual**: mientras no exista `NEXT_PUBLIC_SANITY_PROJECT_ID` (o no haya
+  artículos publicados) se muestran los 4 títulos de relleno de `src/data/posts.ts` y sus páginas «próximamente».
+- **Caché**: las consultas se guardan con tags (`all-post`, `post-<slug>`) y el webhook
+  [`/api/revalidate`](src/app/api/revalidate/route.ts) las invalida al publicar; no hace falta redesplegar.
+- **Imágenes**: salen del CDN de Sanity con `next/image` ([`SanityImage`](src/components/blog/SanityImage.tsx)).
+- **Vista previa de la plantilla** sin Sanity: `/design/articulo` (solo en desarrollo).
+- **Productos del Studio**: `pnpm studio:sync` copia la lista de `src/data/products.ts` al Studio.
 
 ## Tienda
 

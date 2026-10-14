@@ -3,3 +3,7 @@ node_modules
 pnpm-lock.yaml
 public
 cn-tables.mjs
+studio/node_modules
+studio/.sanity
+studio/dist
+studio/

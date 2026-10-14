@@ -1,3 +1,6 @@
+import type { PortableTextBlock } from "@portabletext/react";
+import type { SanityImageSource } from "@/lib/sanityImage";
+
 /** Enlace de navegación. `external` abre en pestaña nueva. */
 export interface NavItem {
   label: string;
@@ -76,14 +79,43 @@ export interface Plan {
   whatsappMessage: string;
 }
 
-export type PostCategory = "Nutrición" | "Entrenamiento" | "Recetas" | "Mentalidad";
+/* ── Blog ─────────────────────────────────────────────────────────────── */
 
-export interface Post {
+/** Clave de categoría; coincide con los valores de la lista del Studio (studio/schemaTypes/post.ts). */
+export type PostCategoryKey = "nutricion" | "entrenamiento" | "recetas" | "mentalidad";
+
+/** Portada tal como la devuelve Sanity (referencia + recorte + punto focal) con su texto alternativo. */
+export interface PostCover {
+  image: SanityImageSource;
+  alt: string;
+}
+
+/** Lo mínimo de un artículo para tarjetas y listados. */
+export interface PostSummary {
   slug: string;
   title: string;
-  category: PostCategory;
-  image: ImageAsset | null;
-  href: string;
+  category: PostCategoryKey;
+  excerpt: string | null;
+  /** ISO 8601. */
+  publishedAt: string | null;
+  cover: PostCover | null;
+  /** true en los artículos de relleno que se muestran mientras no hay contenido en Sanity. */
+  placeholder?: boolean;
+}
+
+/** CTA de WhatsApp propio de un artículo (todos los campos son opcionales). */
+export interface PostCta {
+  title?: string | null;
+  buttonLabel?: string | null;
+  message?: string | null;
+}
+
+export interface PostDetail extends PostSummary {
+  updatedAt: string | null;
+  body: PortableTextBlock[];
+  /** Slugs de productos de la tienda (src/data/products.ts). */
+  relatedProductSlugs: string[];
+  cta: PostCta | null;
 }
 
 /* ── Páginas legales y preguntas frecuentes ─────────────────────────────── */

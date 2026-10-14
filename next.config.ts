@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     // Calidades permitidas. 75 por defecto; 85 para el hero (LCP).
     qualities: [75, 85],
+    // Imágenes del blog servidas por el CDN de Sanity (ver components/blog/SanityImage.tsx).
+    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
   },
   // URLs del WordPress anterior → rutas nuevas, para no perder el posicionamiento al migrar el dominio.
   async redirects() {

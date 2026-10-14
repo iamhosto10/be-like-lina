@@ -13,7 +13,8 @@ import { lina } from "@/data/lina";
 import { categoryLabels, sortedProducts } from "@/data/products";
 import { store } from "@/data/store";
 import { stripRichText } from "@/components/legal/RichText";
-import type { FaqItem, LegalBlock, Product as ProductData } from "@/types";
+import type { FaqItem, LegalBlock, PostDetail, Product as ProductData } from "@/types";
+import { urlFor } from "@/lib/sanityImage";
 import { plans } from "@/data/plans";
 import { whatsappUrl } from "@/lib/links";
 import { absoluteUrl, siteUrl } from "@/lib/site-url";
@@ -245,6 +246,37 @@ export function faqPageSchema(items: FaqItem[], path: string) {
       breadcrumbSchema([
         { name: "Inicio", path: "/" },
         { name: "Preguntas frecuentes", path: path },
+      ]),
+    ],
+  } satisfies { "@context": "https://schema.org"; "@graph": Thing[] };
+}
+
+/** Grafo de un artículo del blog: BlogPosting enlazado a Lina y a la marca + migas. */
+export function blogPostSchema(post: PostDetail) {
+  const path = `/blog/${post.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": absoluteUrl(path),
+        headline: post.title,
+        ...(post.excerpt && { description: post.excerpt }),
+        ...(post.cover && {
+          image: urlFor(post.cover.image).width(1200).height(630).fit("crop").url(),
+        }),
+        ...(post.publishedAt && { datePublished: post.publishedAt }),
+        dateModified: post.updatedAt ?? post.publishedAt ?? undefined,
+        inLanguage: site.locale,
+        author: { "@id": PERSON_ID },
+        publisher: { "@id": ORG_ID },
+        isPartOf: { "@id": WEBSITE_ID },
+        mainEntityOfPage: absoluteUrl(path),
+      },
+      breadcrumbSchema([
+        { name: "Inicio", path: "/" },
+        { name: "Blog", path: "/blog" },
+        { name: post.title, path },
       ]),
     ],
   } satisfies { "@context": "https://schema.org"; "@graph": Thing[] };

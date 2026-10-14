@@ -2,14 +2,16 @@ import type { MetadataRoute } from "next";
 import { lina } from "@/data/lina";
 import { sortedProducts } from "@/data/products";
 import { site } from "@/data/site";
+import { getPostSlugs } from "@/lib/blog";
 import { absoluteUrl, isIndexable, siteUrl } from "@/lib/site-url";
 
 /**
- * Home, tienda, la ficha de cada producto y las páginas legales. /blog y las páginas «próximamente»
- * llevan `noindex` y por eso no aparecen aquí.
+ * Home, tienda, ficha de cada producto, páginas legales y los artículos publicados en Sanity.
+ * /blog y las páginas «próximamente» llevan `noindex` mientras no hay artículos, y no aparecen.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!isIndexable) return [];
+  const posts = await getPostSlugs();
 
   return [
     {
@@ -30,6 +32,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "yearly" as const,
       priority: 0.3,
+    })),
+    ...(posts.length > 0
+      ? [
+          {
+            url: `${siteUrl}/blog`,
+            lastModified: new Date(posts[0].updatedAt),
+            changeFrequency: "weekly" as const,
+            priority: 0.7,
+          },
+        ]
+      : []),
+    ...posts.map((post) => ({
+      url: `${siteUrl}/blog/${post.slug}`,
+      lastModified: new Date(post.updatedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
     ...sortedProducts.map((product) => ({
       url: `${siteUrl}/tienda/${product.slug}`,

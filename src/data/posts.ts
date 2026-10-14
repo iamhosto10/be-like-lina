@@ -1,37 +1,36 @@
-import type { Post } from "@/types";
+import type { PostSummary } from "@/types";
 
 /**
- * Artículos del blog en el home.
- * PENDIENTE: escribir el contenido (los títulos son los aprobados en el mockup).
- * Los enlaces apuntan a /blog/[slug]; mientras no haya contenido, esa ruta muestra «próximamente».
+ * Artículos de relleno: se muestran SOLO mientras Sanity no está configurado o no tiene
+ * ningún artículo publicado (ver `lib/blog.ts`). Sus títulos son los aprobados en el mockup;
+ * sus páginas muestran «próximamente». Al publicar contenido real en Sanity dejan de usarse.
  */
-export const posts: Post[] = [
+export const placeholderPosts: PostSummary[] = [
   {
     slug: "5-comidas-saludables-y-faciles-para-tu-semana",
     title: "5 comidas saludables y fáciles para tu semana",
-    category: "Nutrición",
-    image: null,
-    href: "/blog/5-comidas-saludables-y-faciles-para-tu-semana",
+    category: "nutricion",
   },
   {
     slug: "como-mantener-la-constancia",
     title: "Cómo mantener la constancia y ver resultados reales",
-    category: "Entrenamiento",
-    image: null,
-    href: "/blog/como-mantener-la-constancia",
+    category: "entrenamiento",
   },
   {
     slug: "batido-post-entreno",
     title: "Batido post-entreno para recuperar y crecer",
-    category: "Recetas",
-    image: null,
-    href: "/blog/batido-post-entreno",
+    category: "recetas",
   },
   {
     slug: "mentalidad-el-primer-paso",
     title: "Mentalidad: el primer paso de tu transformación",
-    category: "Mentalidad",
-    image: null,
-    href: "/blog/mentalidad-el-primer-paso",
+    category: "mentalidad",
   },
-];
+].map((post) => ({
+  ...post,
+  excerpt: null,
+  publishedAt: null,
+  cover: null,
+  placeholder: true,
+  category: post.category as PostSummary["category"],
+}));

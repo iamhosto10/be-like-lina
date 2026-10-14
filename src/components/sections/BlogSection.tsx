@@ -1,9 +1,14 @@
 import { Section } from "@/components/shared/Section";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { PostCard } from "@/components/shared/PostCard";
-import { posts } from "@/data/posts";
+import { placeholderPosts } from "@/data/posts";
+import { getPosts } from "@/lib/blog";
 
-export function BlogSection() {
+export async function BlogSection() {
+  // Los 4 más recientes de Sanity; si aún no hay contenido, los títulos de relleno.
+  const published = await getPosts(4);
+  const posts = published.length > 0 ? published : placeholderPosts;
+
   return (
     <Section tone="dark" id="blog" aria-labelledby="blog-titulo">
       <SectionHeader

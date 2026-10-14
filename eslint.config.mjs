@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Generado por withCn en cada build (ver next.config.ts):
     "cn-tables.mjs",
+    // El Studio de Sanity es otro proyecto con sus propias dependencias.
+    "studio/**",
   ]),
 ]);
 
