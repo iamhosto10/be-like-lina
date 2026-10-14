@@ -75,7 +75,7 @@ export default function StorePage() {
         <p className="mt-1.5 mb-7 text-sm text-muted-foreground md:text-base">
           Planes personalizados con Lina. Elige el que se adapta a tus objetivos.
         </p>
-        <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+        <div className="grid gap-5 md:grid-cols-2 md:gap-x-6 md:gap-y-0">
           {plans.map((plan) => (
             <PlanCard key={plan.slug} plan={plan} />
           ))}

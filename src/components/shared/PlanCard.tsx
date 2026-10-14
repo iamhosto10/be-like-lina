@@ -24,13 +24,16 @@ export function PlanCard({ plan, className }: PlanCardProps) {
   return (
     <article
       className={cn(
-        "relative flex flex-col rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm md:p-7",
+        // Móvil: columna normal. md+: 4 filas en subgrid (encabezado · lista · precio · botón),
+        // para que cada fila quede alineada con la de la tarjeta vecina aunque el contenido varíe.
+        "relative flex flex-col rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm md:row-span-4 md:grid md:grid-rows-subgrid md:gap-y-0 md:p-7",
         highlighted && "border-primary/40 ring-1 ring-primary/15",
         className,
       )}
     >
+      {/* Etiqueta sobre el borde: no ocupa espacio, así las dos tarjetas arrancan a la misma altura. */}
       {plan.highlight && (
-        <p className="mb-3 text-xs font-bold tracking-[0.15em] text-primary uppercase">
+        <p className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-bold tracking-[0.12em] text-primary-foreground uppercase md:left-7">
           {plan.highlight}
         </p>
       )}
@@ -51,7 +54,7 @@ export function PlanCard({ plan, className }: PlanCardProps) {
         </div>
       </div>
 
-      <ul className="mt-5 space-y-1.5 text-sm text-muted-foreground">
+      <ul className="mt-5 space-y-1.5 text-sm text-muted-foreground md:self-start">
         {plan.features.map((f) => (
           <li key={f} className="flex gap-2">
             <span
@@ -63,7 +66,7 @@ export function PlanCard({ plan, className }: PlanCardProps) {
         ))}
       </ul>
 
-      <p className="mt-6">
+      <p className="mt-6 md:self-end">
         <span className="text-2xl font-extrabold tracking-tight tabular-nums md:text-[1.75rem]">
           {formatCOP(plan.price)}
         </span>
@@ -78,7 +81,11 @@ export function PlanCard({ plan, className }: PlanCardProps) {
           render={
             <a href={whatsappUrl(plan.whatsappMessage)} target="_blank" rel="noopener noreferrer" />
           }
-          className={cn(!highlighted && "border-primary text-primary hover:bg-primary/10")}
+          className={cn(
+            // Mismo ancho, alto y borde en las dos variantes: solo cambia el relleno.
+            "w-full border border-primary sm:w-48",
+            !highlighted && "text-primary hover:bg-primary/10",
+          )}
         >
           Elegir plan
         </Button>

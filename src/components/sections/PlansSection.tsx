@@ -15,13 +15,11 @@ export function PlansSection() {
         action={{ label: "Ver todos los planes", href: "/tienda#servicios" }}
       />
 
-      <ul className="grid gap-5 md:grid-cols-2 md:gap-6" aria-label="Planes">
+      <div className="grid gap-5 md:grid-cols-2 md:gap-x-6 md:gap-y-0" aria-label="Planes">
         {plans.map((plan) => (
-          <li key={plan.slug}>
-            <PlanCard plan={plan} className="h-full" />
-          </li>
+          <PlanCard key={plan.slug} plan={plan} />
         ))}
-      </ul>
+      </div>
 
       <p className="mt-8 text-sm text-muted-foreground">
         ¿No sabes cuál elegir?{" "}
