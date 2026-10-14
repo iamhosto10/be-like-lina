@@ -3,7 +3,8 @@ import type { Product, ProductCategory } from "@/types";
 /**
  * Catálogo real de belikelina.com (precios y textos verificados en la tienda
  * actual, octubre 2026). `featured` marca los 6 que aparecen en el home.
- * `externalSlug` es el slug en WooCommerce, donde se completa la compra.
+ * `externalSlug` es el slug del producto en el WordPress anterior; ya no se enlaza, pero sirve
+ * para las redirecciones 301 (/product/<externalSlug>/ → /tienda/<slug>) al migrar el dominio.
  */
 export const products: Product[] = [
   {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Check, ShoppingBag } from "lucide-react";
+import { ArrowLeft, Check } from "lucide-react";
 import { SiWhatsapp } from "@icons-pack/react-simple-icons";
 import { cn } from "cn";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { categoryLabels, getProduct, getRelatedProducts, products } from "@/data/products";
 import { store } from "@/data/store";
 import { formatCOP } from "@/lib/format";
-import { externalProductUrl, whatsappUrl } from "@/lib/links";
+import { whatsappUrl } from "@/lib/links";
 import { productPageSchema } from "@/lib/schema";
 
 /* Las 8 fichas se generan en el build: HTML estático, sin servidor por medio. */
@@ -118,43 +118,27 @@ export default async function ProductPage({ params }: PageProps<"/tienda/[slug]"
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            {/* Compra provisional por WhatsApp mientras se define el checkout propio. */}
+            <div className="mt-8">
               <Button
                 size="xl"
-                nativeButton={false}
-                render={
-                  <a
-                    href={externalProductUrl(product.externalSlug)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }
-              >
-                <ShoppingBag aria-hidden />
-                Comprar ahora
-              </Button>
-              <Button
-                size="xl"
-                variant="outline"
                 nativeButton={false}
                 render={
                   <a
                     href={whatsappUrl(
-                      `Hola Lina, quiero información sobre ${fullName} (${formatCOP(product.price)}).`,
+                      `Hola Lina, quiero comprar ${fullName} (${formatCOP(product.price)}).`,
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
                   />
                 }
-                className="border-primary text-primary hover:bg-primary/10"
               >
                 <SiWhatsapp aria-hidden />
-                Preguntar por WhatsApp
+                Comprar por WhatsApp
               </Button>
             </div>
 
             <p className="mt-4 text-sm text-muted-foreground">{store.purchaseNote}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{store.checkoutNote}</p>
           </div>
         </div>
       </Section>

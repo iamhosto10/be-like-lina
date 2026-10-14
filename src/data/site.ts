@@ -59,11 +59,6 @@ export const site = {
     { name: "WhatsApp", href: WHATSAPP_BASE },
   ] satisfies SocialLink[],
 
-  /** Enlaces a la web actual (WordPress) mientras se migra. */
-  external: {
-    store: "https://belikelina.com/shop/",
-  },
-
   /** Páginas legales y de ayuda (rutas propias; el contenido vive en src/data/legal). */
   legal: [
     { label: "Términos y condiciones", href: "/terminos-y-condiciones" },

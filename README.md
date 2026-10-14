@@ -79,7 +79,7 @@ La URL absoluta del sitio se resuelve en el build ([`src/lib/site-url.ts`](src/l
 - [`/tienda`](src/app/tienda/page.tsx): catálogo completo, agrupado en suplementos, guías y endulzantes.
 - [`/tienda/[slug]`](src/app/tienda/%5Bslug%5D/page.tsx): una ficha por producto (8 páginas estáticas) con foto, precio, beneficios, ficha técnica y productos relacionados.
 
-El botón **Comprar ahora** lleva al producto en belikelina.com, donde está el checkout de Mercado Pago; el secundario abre WhatsApp con el producto en el mensaje. Precios, textos y fichas viven en [`src/data/products.ts`](src/data/products.ts) y se reflejan a la vez en la página, en el JSON-LD, en el sitemap y en `llms.txt`.
+El botón **Comprar por WhatsApp** abre una conversación con Lina con el producto y el precio en el mensaje (provisional, mientras se define el checkout propio). Precios, textos y fichas viven en [`src/data/products.ts`](src/data/products.ts) y se reflejan a la vez en la página, en el JSON-LD, en el sitemap y en `llms.txt`.
 
 ## Páginas legales y preguntas frecuentes
 
@@ -87,4 +87,4 @@ Cuatro rutas propias, con el texto copiado del sitio anterior: `/terminos-y-cond
 
 ## Estado
 
-Fase 1: página de inicio completa (hero, tienda, recetas, planes, blog, footer) más la tienda con ficha por producto. La compra se completa en belikelina.com y los planes abren WhatsApp. Las páginas de artículos y recetas muestran «próximamente» (`noindex`) hasta que exista el contenido.
+Fase 1: página de inicio completa (hero, tienda, recetas, planes, blog, footer) más la tienda con ficha por producto. La compra y los planes se coordinan por WhatsApp; no hay carrito ni pasarela de pago todavía. Las páginas de artículos y recetas muestran «próximamente» (`noindex`) hasta que exista el contenido.

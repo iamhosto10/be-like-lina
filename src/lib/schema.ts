@@ -15,7 +15,7 @@ import { store } from "@/data/store";
 import { stripRichText } from "@/components/legal/RichText";
 import type { FaqItem, LegalBlock, Product as ProductData } from "@/types";
 import { plans } from "@/data/plans";
-import { externalProductUrl, whatsappUrl } from "@/lib/links";
+import { whatsappUrl } from "@/lib/links";
 import { absoluteUrl, siteUrl } from "@/lib/site-url";
 
 /* Identificadores estables para enlazar entidades entre sí dentro del grafo. */
@@ -88,7 +88,7 @@ export function productSchema(p: ProductData): Product {
       price: p.price,
       priceCurrency: "COP",
       availability: "https://schema.org/InStock",
-      url: externalProductUrl(p.externalSlug),
+      url: absoluteUrl(`/tienda/${p.slug}`),
       seller: { "@id": ORG_ID },
     },
   };

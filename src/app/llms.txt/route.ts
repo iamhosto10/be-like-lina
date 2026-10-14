@@ -4,7 +4,7 @@ import { products } from "@/data/products";
 import { plans } from "@/data/plans";
 import { freeRecipes } from "@/data/recipes";
 import { formatCOP } from "@/lib/format";
-import { externalProductUrl, whatsappUrl } from "@/lib/links";
+import { whatsappUrl } from "@/lib/links";
 import { siteUrl } from "@/lib/site-url";
 
 /**
@@ -20,7 +20,7 @@ export function GET() {
     .sort((a, b) => a.order - b.order)
     .map((p) => {
       const name = p.variant ? `${p.name} (${p.variant})` : p.name;
-      return `- [${name}](${siteUrl}/tienda/${p.slug}): ${p.spec}. ${formatCOP(p.price)} COP. Se compra en ${externalProductUrl(p.externalSlug)}`;
+      return `- [${name}](${siteUrl}/tienda/${p.slug}): ${p.spec}. ${formatCOP(p.price)} COP`;
     });
 
   const planLines = plans.map(
@@ -48,7 +48,7 @@ ${planLines.join("\n")}
 
 ${productLines.join("\n")}
 
-Compra online en ${site.external.store} (pago con Mercado Pago, envíos a toda Colombia).
+La compra se coordina directamente con Lina por WhatsApp (${whatsappUrl()}); envíos a toda Colombia.
 
 ## Recursos gratuitos
 
@@ -64,7 +64,6 @@ ${socialLines.join("\n")}
 
 - [Inicio](${siteUrl}/): hero, tienda, recetas saludables, planes de entrenamiento y blog.
 - [Tienda](${siteUrl}/tienda): catálogo completo, con una ficha por producto.
-- [Tienda actual en WordPress](${site.external.store}): donde se completa la compra.
 - [Servicios y planes](${siteUrl}/tienda#servicios): Plan Nutricional y Programa de Entrenamiento.
 
 ## Políticas y ayuda

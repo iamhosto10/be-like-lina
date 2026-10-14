@@ -276,7 +276,7 @@ export const terminosPage: LegalPageData = {
         { type: "subheading", text: "Tarjeta crédito o débito" },
         {
           type: "p",
-          text: "Los pagos por medio de tarjetas bancarías también podrán ser realizados por medio de la plataforma Mercadopago en la tienda online [www.belikelina.com](https://belikelina.com/shop/) seleccionando el método de pago Tarjeta de Crédito o Débito.",
+          text: "Los pagos por medio de tarjetas bancarías también podrán ser realizados por medio de la plataforma Mercadopago en la tienda online [www.belikelina.com](/tienda) seleccionando el método de pago Tarjeta de Crédito o Débito.",
         },
         { type: "p", text: "Recibimos todas las tarjetas." },
       ],
