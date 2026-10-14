@@ -22,8 +22,8 @@ export const lina = {
       height: 600,
     } satisfies ImageAsset,
     og: {
-      src: "/images/lina/og-compartir.jpg",
-      alt: "Be Like Lina: «Construye una versión de ti que te haga sentir bien». Lina Fuentes, entrenadora integral para la mujer.",
+      src: "/images/lina/og-logo.jpg",
+      alt: "Be Like Lina",
       width: 1200,
       height: 630,
     } satisfies ImageAsset,
