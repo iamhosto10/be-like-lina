@@ -14,10 +14,16 @@ Panel de Sanity donde se escriben los artículos del blog. Es un proyecto aparte
    pnpm install --ignore-workspace
    pnpm dev            # http://localhost:3333
    ```
-4. **Subir los 4 artículos actuales como borradores** (opcional):
+4. **Subir 4 artículos de prueba completos** (opcional, para ver el blog funcionando):
    ```bash
-   npx sanity dataset import seed/posts.ndjson production
+   pnpm exec sanity login
+   pnpm exec sanity dataset import seed/posts.ndjson production --replace
    ```
+   Importa 4 artículos **ya publicados** con portada, texto, imágenes, productos relacionados y botón de
+   WhatsApp (cada uno prueba un caso distinto: con y sin productos, con CTA completo, parcial o vacío).
+   Es contenido de ejemplo: hay que reemplazarlo por los textos reales de Lina. Si antes importaste los
+   borradores viejos (solo título), bórralos en el Studio (menú `⋯` → *Delete*) para no tener duplicados.
+   Para regenerar el archivo: `node scripts/build-sanity-seed.mjs` desde la raíz del sitio.
 5. **Publicar el Studio**: `pnpm run deploy` y elegir el nombre `be-like-lina`.
 6. **Invitar a Lina**: manage → proyecto → *Members* → *Invite*, con rol *Editor*.
 
