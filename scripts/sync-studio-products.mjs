@@ -5,7 +5,7 @@
  *
  * Los productos viven en src/data/products.ts; el Studio es otro proyecto y no puede importarlos,
  * así que se copia su lista a studio/schemaTypes/productOptions.ts. Correrlo cada vez que se
- * agregue o renombre un producto, y volver a desplegar el Studio (`cd studio && pnpm deploy`).
+ * agregue o renombre un producto, y volver a desplegar el Studio (`cd studio && pnpm run deploy`).
  */
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";

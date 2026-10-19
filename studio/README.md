@@ -18,7 +18,7 @@ Panel de Sanity donde se escriben los artículos del blog. Es un proyecto aparte
    ```bash
    npx sanity dataset import seed/posts.ndjson production
    ```
-5. **Publicar el Studio**: `pnpm deploy` y elegir el nombre `be-like-lina`.
+5. **Publicar el Studio**: `pnpm run deploy` y elegir el nombre `be-like-lina`.
 6. **Invitar a Lina**: manage → proyecto → *Members* → *Invite*, con rol *Editor*.
 
 ## Conectar el sitio (variables en Vercel → Settings → Environment Variables)
@@ -60,5 +60,5 @@ La lista que se elige en *Productos relacionados* se copia de `src/data/products
 
 ```bash
 pnpm studio:sync                   # desde la raíz del sitio
-cd studio && pnpm deploy           # volver a publicar el Studio
+cd studio && pnpm run deploy       # volver a publicar el Studio
 ```
