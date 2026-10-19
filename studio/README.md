@@ -27,16 +27,17 @@ Panel de Sanity donde se escriben los artículos del blog. Es un proyecto aparte
 5. **Publicar el Studio**: `pnpm run deploy` y elegir el nombre `be-like-lina`.
 6. **Invitar a Lina**: manage → proyecto → *Members* → *Invite*, con rol *Editor*.
 
-## Conectar el sitio (variables en Vercel → Settings → Environment Variables)
+## Conectar el sitio
+
+El sitio ya trae el Project ID y el dataset en el código (`src/lib/sanityConfig.ts`), así que **no hace falta
+ninguna variable** para leer los artículos publicados (el dataset es público). En Vercel solo se necesita:
 
 | Variable | Valor |
 |---|---|
-| `NEXT_PUBLIC_SANITY_PROJECT_ID` | el Project ID |
-| `NEXT_PUBLIC_SANITY_DATASET` | `production` |
-| `SANITY_API_READ_TOKEN` | token con rol **Viewer** (manage → API → Tokens). Solo hace falta si el dataset es privado |
-| `SANITY_REVALIDATE_SECRET` | una cadena larga y aleatoria (la inventas tú) |
+| `SANITY_REVALIDATE_SECRET` | una cadena larga y aleatoria (la inventas tú); la misma del webhook |
+| `SANITY_API_READ_TOKEN` | opcional: solo si algún día el dataset pasa a privado (token **Viewer**) |
 
-Después de guardarlas hay que **volver a desplegar** en Vercel.
+Si cambias una variable hay que **volver a desplegar**. No pongas el secreto en `studio/.env`: el Studio no lo usa.
 
 ## Webhook (para que un artículo nuevo aparezca sin redesplegar)
 

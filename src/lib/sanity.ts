@@ -2,14 +2,13 @@ import "server-only";
 // Se importa de @sanity/client y no de "next-sanity": la raíz de next-sanity re-exporta
 // componentes de cliente que terminan en el JavaScript del navegador (~55 KB gzip).
 import { createClient, type QueryParams } from "@sanity/client";
+import { apiVersion, dataset, projectId } from "@/lib/sanityConfig";
 
-export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "";
-export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
-export const apiVersion = "2025-07-30";
+export { projectId, dataset, apiVersion };
 
 /**
- * Sin Project ID el sitio funciona igual con el contenido local de `src/data` (ver `lib/blog.ts`).
- * Así un despliegue nunca se rompe por una variable de entorno que falta.
+ * Si algún día se quita el Project ID, el sitio sigue funcionando con el contenido local de
+ * `src/data` (ver `lib/blog.ts`): un despliegue nunca se rompe por falta de configuración.
  */
 export const isSanityConfigured = projectId.length > 0;
 

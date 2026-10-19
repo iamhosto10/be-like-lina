@@ -87,8 +87,9 @@ Los artículos se escriben en **Sanity** (CMS) y todos usan la misma plantilla
 de la tienda y un botón de WhatsApp propio por artículo. El Studio está en [`studio/`](studio) y su guía de
 configuración (proyecto, tokens, webhook, variables de entorno) en [`studio/README.md`](studio/README.md).
 
-- **Sin configurar, el sitio funciona igual**: mientras no exista `NEXT_PUBLIC_SANITY_PROJECT_ID` (o no haya
-  artículos publicados) se muestran los 4 títulos de relleno de `src/data/posts.ts` y sus páginas «próximamente».
+- **Configuración**: el Project ID y el dataset (públicos) vienen por defecto en [`src/lib/sanityConfig.ts`](src/lib/sanityConfig.ts);
+  las variables `NEXT_PUBLIC_SANITY_*` solo hacen falta para apuntar a otro proyecto. Mientras no haya artículos publicados en
+  Sanity se muestran los 4 títulos de relleno de `src/data/posts.ts` y sus páginas «próximamente».
 - **Caché**: las consultas se guardan con tags (`all-post`, `post-<slug>`) y el webhook
   [`/api/revalidate`](src/app/api/revalidate/route.ts) las invalida al publicar; no hace falta redesplegar.
 - **Imágenes**: salen del CDN de Sanity con `next/image` ([`SanityImage`](src/components/blog/SanityImage.tsx)).
