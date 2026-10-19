@@ -12,6 +12,8 @@ import { ProductGrid } from "@/components/shared/ProductGrid";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { categoryLabels, getProduct, getRelatedProducts, products } from "@/data/products";
 import { store } from "@/data/store";
+import { AddToCartButton } from "@/components/cart/AddToCartButton";
+import { commerce } from "@/lib/commerce/config";
 import { formatCOP } from "@/lib/format";
 import { whatsappUrl } from "@/lib/links";
 import { productPageSchema } from "@/lib/schema";
@@ -118,27 +120,35 @@ export default async function ProductPage({ params }: PageProps<"/tienda/[slug]"
               ))}
             </ul>
 
-            {/* Compra provisional por WhatsApp mientras se define el checkout propio. */}
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap gap-3">
+              {commerce.enabled ? <AddToCartButton slug={product.slug} /> : null}
               <Button
                 size="xl"
+                variant={commerce.enabled ? "outline" : "default"}
                 nativeButton={false}
                 render={
                   <a
                     href={whatsappUrl(
-                      `Hola Lina, quiero comprar ${fullName} (${formatCOP(product.price)}).`,
+                      commerce.enabled
+                        ? `Hola Lina, quiero información sobre ${fullName} (${formatCOP(product.price)}).`
+                        : `Hola Lina, quiero comprar ${fullName} (${formatCOP(product.price)}).`,
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
                   />
                 }
+                className={
+                  commerce.enabled ? "border-primary text-primary hover:bg-primary/10" : undefined
+                }
               >
                 <SiWhatsapp aria-hidden />
-                Comprar por WhatsApp
+                {commerce.enabled ? "Preguntar por WhatsApp" : "Comprar por WhatsApp"}
               </Button>
             </div>
 
-            <p className="mt-4 text-sm text-muted-foreground">{store.purchaseNote}</p>
+            <p className="mt-4 text-sm text-muted-foreground">
+              {commerce.enabled ? store.purchaseNoteOnline : store.purchaseNote}
+            </p>
           </div>
         </div>
       </Section>

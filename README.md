@@ -20,6 +20,7 @@ pnpm dev          # http://localhost:3000
 | `pnpm images`               | Optimiza las imágenes fuente a `public/images/` (ver abajo) |
 | `pnpm og`                   | Regenera la imagen para compartir (favicon sobre el fondo)  |
 | `pnpm studio:sync`          | Copia los productos de la tienda al Studio de Sanity        |
+| `pnpm test:commerce`        | Pruebas del carrito, pagos y correos                        |
 
 ## Cómo cambiar los colores
 
@@ -95,6 +96,51 @@ configuración (proyecto, tokens, webhook, variables de entorno) en [`studio/REA
 - **Imágenes**: salen del CDN de Sanity con `next/image` ([`SanityImage`](src/components/blog/SanityImage.tsx)).
 - **Vista previa de la plantilla** sin Sanity: `/design/articulo` (solo en desarrollo).
 - **Productos del Studio**: `pnpm studio:sync` copia la lista de `src/data/products.ts` al Studio.
+
+## Tienda y pagos (carrito + Mercado Pago)
+
+Carrito persistente (`localStorage`), checkout propio y pago con **Mercado Pago Checkout Pro** (el cliente paga en la
+página de Mercado Pago: tarjetas, PSE, Nequi…). Al aprobarse el pago se envían **dos correos con Resend**: la
+confirmación a quien compró y el aviso a quien despacha (con botones para escribirle al cliente por WhatsApp o
+responderle). Los planes de entrenamiento y nutrición siguen por WhatsApp, fuera del carrito.
+
+### Modos (los decide solo el entorno)
+
+| Modo                  | Cuándo                                                 | Qué pasa                                                                                                                                                                             |
+| --------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **off** (por defecto) | sin `MERCADOPAGO_ACCESS_TOKEN` ni `CHECKOUT_DEMO_MODE` | no hay carrito; las fichas dicen «Comprar por WhatsApp». Es el estado actual del sitio publicado                                                                                     |
+| **demo**              | `CHECKOUT_DEMO_MODE=true` y sin token                  | todo el flujo funciona, pero el pago se simula en `/checkout/demo/…` (aprobado, en revisión o rechazado). Los correos son reales si hay `RESEND_API_KEY` y salen marcados «[PRUEBA]» |
+| **mercadopago**       | hay `MERCADOPAGO_ACCESS_TOKEN`                         | pagos reales (o de prueba, según el tipo de credencial)                                                                                                                              |
+
+Cambiar de modo exige **redesplegar** (se decide al construir el sitio).
+
+### Poner las credenciales (lo único que falta)
+
+1. **Mercado Pago**: en mercadopago.com.co/developers crea una aplicación (_Checkout Pro_). Copia el **Access Token** a
+   `MERCADOPAGO_ACCESS_TOKEN`. En _Webhooks_ configura la URL `https://<dominio>/api/mercadopago/webhook`, el evento
+   **Pagos**, y copia su **Clave secreta** a `MERCADOPAGO_WEBHOOK_SECRET`. Empieza con las credenciales de **prueba**.
+2. **Resend**: crea la API key (`RESEND_API_KEY`) y verifica el dominio `belikelina.com` (registros DNS que te da Resend) para
+   poder enviar desde `pedidos@belikelina.com` (`ORDER_EMAIL_FROM`). Quien despacha se define en `ORDER_NOTIFY_EMAIL`.
+3. **Upstash Redis**: en Vercel → Storage → Marketplace → _Upstash Redis_ → conectar al proyecto (crea las variables solas).
+   Guarda los pedidos y evita correos duplicados cuando Mercado Pago repite una notificación. **Sin Redis el checkout se
+   bloquea en Vercel** (la memoria no se comparte entre peticiones).
+4. Cargar las variables en Vercel (Production) y **volver a desplegar**.
+
+### Cómo funciona
+
+`/checkout` crea el pedido en el servidor (los precios se recalculan desde `src/data/products.ts`; nada que venga del
+navegador se toma como precio), crea la preferencia en Mercado Pago y redirige. Mercado Pago avisa a
+`/api/mercadopago/webhook`; el sitio **valida la firma**, consulta el pago a la API de Mercado Pago, comprueba que el monto
+coincida con el del pedido y recién entonces lo da por pagado y envía los correos (una sola vez, aunque la notificación se repita).
+Si un correo falla, el webhook responde 500 y Mercado Pago reintenta solo ese envío.
+
+- **Envío**: tarifa fija en [`src/data/shipping.ts`](src/data/shipping.ts) (provisional: $15.000; confirmar con Lina). Los productos
+  digitales (Guía y Recetario) no cobran envío ni piden dirección: quien despacha recibe la orden de enviarlos por correo.
+- **Pruebas**: `pnpm test:commerce` (precios, firma del webhook, idempotencia, fallos de envío, escape de HTML).
+- Código: `src/lib/commerce/` (lógica), `src/actions/checkout.ts` (crea el pedido), `src/app/api/mercadopago/webhook/`,
+  `src/components/cart/` (carrito y checkout), `src/app/checkout/` (páginas).
+- Reembolsos y cambios de estado por Mercado Pago actualizan el pedido, pero **no** envían correos; el reembolso en sí se hace
+  desde el panel de Mercado Pago.
 
 ## Tienda
 

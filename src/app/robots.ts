@@ -21,6 +21,9 @@ const AI_CRAWLERS = [
   "DuckAssistBot", // DuckDuckGo AI
 ];
 
+/** Rutas que nunca deben rastrearse: pagos y endpoints internos. */
+const PRIVATE = ["/checkout", "/api/"];
+
 export default function robots(): MetadataRoute.Robots {
   /* Fuera del dominio definitivo (Vercel, pruebas): nadie rastrea, nada se indexa. */
   if (!isIndexable) {
@@ -29,8 +32,8 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
-      { userAgent: "*", allow: "/" },
-      { userAgent: AI_CRAWLERS, allow: "/" },
+      { userAgent: "*", allow: "/", disallow: PRIVATE },
+      { userAgent: AI_CRAWLERS, allow: "/", disallow: PRIVATE },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
     host: siteUrl,

@@ -8,6 +8,9 @@ import { lina } from "@/data/lina";
 import { isIndexable, siteUrl } from "@/lib/site-url";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { linaSchema, organizationSchema, webSiteSchema } from "@/lib/schema";
+import { CartProvider, type CatalogItem } from "@/components/cart/CartProvider";
+import { products } from "@/data/products";
+import { commerce } from "@/lib/commerce/config";
 import "./globals.css";
 
 /* Fuente principal de todo el sitio (variable, self-hosted por next/font, sin CLS) */
@@ -64,22 +67,39 @@ export const metadata: Metadata = {
   robots: isIndexable ? { index: true, follow: true } : { index: false, follow: false },
 };
 
+/** Catálogo mínimo para el carrito (nombre, precio y foto); los precios reales se recalculan en el servidor. */
+const catalog: Record<string, CatalogItem> = Object.fromEntries(
+  products.map((p) => [
+    p.slug,
+    {
+      slug: p.slug,
+      name: p.name,
+      variant: p.variant,
+      price: p.price,
+      image: p.image?.src,
+      digital: p.category === "digital",
+    },
+  ]),
+);
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang={site.locale} className={`${figtree.variable} ${greatVibes.variable} h-full`}>
       <body className="flex min-h-full flex-col">
-        <a
-          href="#contenido"
-          className="sr-only z-50 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
-        >
-          Saltar al contenido
-        </a>
-        <Header />
-        <main id="contenido" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton />
+        <CartProvider catalog={catalog} enabled={commerce.enabled} demo={commerce.mode === "demo"}>
+          <a
+            href="#contenido"
+            className="sr-only z-50 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          >
+            Saltar al contenido
+          </a>
+          <Header />
+          <main id="contenido" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppButton />
+        </CartProvider>
         <JsonLd
           data={{
             "@context": "https://schema.org",

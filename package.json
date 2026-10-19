@@ -13,7 +13,8 @@
     "check": "pnpm lint && pnpm typecheck && pnpm format:check",
     "images": "node scripts/optimize-images.mjs",
     "og": "node scripts/make-og.mjs",
-    "studio:sync": "node scripts/sync-studio-products.mjs"
+    "studio:sync": "node scripts/sync-studio-products.mjs",
+    "test:commerce": "NODE_OPTIONS=--conditions=react-server tsx --tsconfig tsconfig.json scripts/test-commerce.mts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -22,6 +23,7 @@
     "@sanity/client": "^8.9.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/webhook": "^4.0.4",
+    "@upstash/redis": "^1.39.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.3.0",
     "lucide-react": "^1.46.0",
@@ -45,6 +47,7 @@
     "schema-dts": "^2.0.0",
     "sharp": "^0.35.4",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   },
   "packageManager": "pnpm@10.28.0"

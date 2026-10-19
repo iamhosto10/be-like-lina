@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "cn";
 import { Logo } from "@/components/shared/Logo";
+import { CartButton } from "@/components/cart/CartButton";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { site } from "@/data/site";
 
@@ -116,7 +117,10 @@ export function Header() {
         </nav>
 
         {/* En escritorio no hay nada más a la derecha: el menú queda alineado al borde. */}
-        <MobileMenu activeHref={activeHref} />
+        <div className="flex items-center gap-1">
+          <CartButton />
+          <MobileMenu activeHref={activeHref} />
+        </div>
       </div>
     </header>
   );
