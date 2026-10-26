@@ -97,50 +97,62 @@ configuración (proyecto, tokens, webhook, variables de entorno) en [`studio/REA
 - **Vista previa de la plantilla** sin Sanity: `/design/articulo` (solo en desarrollo).
 - **Productos del Studio**: `pnpm studio:sync` copia la lista de `src/data/products.ts` al Studio.
 
-## Tienda y pagos (carrito + Mercado Pago)
+## Tienda y pagos (carrito + ePayco)
 
-Carrito persistente (`localStorage`), checkout propio y pago con **Mercado Pago Checkout Pro** (el cliente paga en la
-página de Mercado Pago: tarjetas, PSE, Nequi…). Al aprobarse el pago se envían **dos correos con Resend**: la
-confirmación a quien compró y el aviso a quien despacha (con botones para escribirle al cliente por WhatsApp o
-responderle). Los planes de entrenamiento y nutrición siguen por WhatsApp, fuera del carrito.
+Carrito persistente (`localStorage`), checkout propio y pago con el **Checkout de ePayco** (el cliente paga en la ventana
+segura de ePayco: tarjetas, PSE, Nequi…). **Solo cuando el pago queda aprobado**:
+
+1. se envía un correo a **ventas@belikelina.com** (`ORDER_NOTIFY_EMAIL`) con el pedido, el cliente y la dirección,
+2. se envía la confirmación al comprador (ambos con **Resend**),
+3. la página de resultado lleva al comprador a **WhatsApp de Lina** con el resumen del pedido ya escrito (cuenta regresiva de
+   6 s, cancelable, y solo una vez por pedido; queda el botón).
+
+Los planes de entrenamiento y nutrición siguen por WhatsApp, fuera del carrito.
 
 ### Modos (los decide solo el entorno)
 
-| Modo                  | Cuándo                                                 | Qué pasa                                                                                                                                                                             |
-| --------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **off** (por defecto) | sin `MERCADOPAGO_ACCESS_TOKEN` ni `CHECKOUT_DEMO_MODE` | no hay carrito; las fichas dicen «Comprar por WhatsApp». Es el estado actual del sitio publicado                                                                                     |
-| **demo**              | `CHECKOUT_DEMO_MODE=true` y sin token                  | todo el flujo funciona, pero el pago se simula en `/checkout/demo/…` (aprobado, en revisión o rechazado). Los correos son reales si hay `RESEND_API_KEY` y salen marcados «[PRUEBA]» |
-| **mercadopago**       | hay `MERCADOPAGO_ACCESS_TOKEN`                         | pagos reales (o de prueba, según el tipo de credencial)                                                                                                                              |
+| Modo                  | Cuándo                                                          | Qué pasa                                                                                                                                         |
+| --------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **off** (por defecto) | sin credenciales de ePayco ni `CHECKOUT_DEMO_MODE`              | no hay carrito; las fichas dicen «Comprar por WhatsApp». Es el estado actual del sitio publicado                                                 |
+| **demo**              | `CHECKOUT_DEMO_MODE=true` y sin credenciales                    | todo el flujo funciona, pero el pago se simula en `/checkout/demo/…`. Los correos son reales si hay `RESEND_API_KEY` y salen marcados «[PRUEBA]» |
+| **epayco**            | están `EPAYCO_PUBLIC_KEY`, `EPAYCO_CUSTOMER_ID`, `EPAYCO_P_KEY` | pagos con ePayco. Con `EPAYCO_TEST=true` (valor por defecto) son de **prueba**; con `EPAYCO_TEST=false` se cobra de verdad                       |
 
 Cambiar de modo exige **redesplegar** (se decide al construir el sitio).
 
 ### Poner las credenciales (lo único que falta)
 
-1. **Mercado Pago**: en mercadopago.com.co/developers crea una aplicación (_Checkout Pro_). Copia el **Access Token** a
-   `MERCADOPAGO_ACCESS_TOKEN`. En _Webhooks_ configura la URL `https://<dominio>/api/mercadopago/webhook`, el evento
-   **Pagos**, y copia su **Clave secreta** a `MERCADOPAGO_WEBHOOK_SECRET`. Empieza con las credenciales de **prueba**.
+1. **ePayco** (dashboard.epayco.co → Integraciones → Llaves API): copia `P_PUBLIC_KEY` → `EPAYCO_PUBLIC_KEY`,
+   `P_CUST_ID_CLIENTE` → `EPAYCO_CUSTOMER_ID` y `P_KEY` → `EPAYCO_P_KEY`. Empieza con `EPAYCO_TEST=true`. La URL de
+   confirmación (`https://<dominio>/api/epayco/confirmacion`) la envía el propio botón en cada pago; no hay que configurarla
+   en el panel. Para cobrar de verdad: `EPAYCO_TEST=false` y redesplegar.
 2. **Resend**: crea la API key (`RESEND_API_KEY`) y verifica el dominio `belikelina.com` (registros DNS que te da Resend) para
-   poder enviar desde `pedidos@belikelina.com` (`ORDER_EMAIL_FROM`). Quien despacha se define en `ORDER_NOTIFY_EMAIL`.
+   poder enviar desde `pedidos@belikelina.com` (`ORDER_EMAIL_FROM`). Sin `ORDER_NOTIFY_EMAIL`, el aviso va a ventas@belikelina.com.
 3. **Upstash Redis**: en Vercel → Storage → Marketplace → _Upstash Redis_ → conectar al proyecto (crea las variables solas).
-   Guarda los pedidos y evita correos duplicados cuando Mercado Pago repite una notificación. **Sin Redis el checkout se
+   Guarda los pedidos y evita correos duplicados cuando ePayco repite una confirmación. **Sin Redis el checkout se
    bloquea en Vercel** (la memoria no se comparte entre peticiones).
 4. Cargar las variables en Vercel (Production) y **volver a desplegar**.
 
 ### Cómo funciona
 
 `/checkout` crea el pedido en el servidor (los precios se recalculan desde `src/data/products.ts`; nada que venga del
-navegador se toma como precio), crea la preferencia en Mercado Pago y redirige. Mercado Pago avisa a
-`/api/mercadopago/webhook`; el sitio **valida la firma**, consulta el pago a la API de Mercado Pago, comprueba que el monto
-coincida con el del pedido y recién entonces lo da por pagado y envía los correos (una sola vez, aunque la notificación se repita).
-Si un correo falla, el webhook responde 500 y Mercado Pago reintenta solo ese envío.
+navegador se toma como precio) y lleva a `/checkout/pagar/<pedido>`, que abre la ventana de ePayco. Luego hay **dos caminos
+independientes** que confirman el pago, y ambos consultan la transacción a ePayco (`/validation/v1/reference/<ref>`) en vez de
+fiarse de lo recibido:
+
+- la **confirmación** de ePayco a `/api/epayco/confirmacion` (valida la firma `x_signature`), y
+- el **regreso del cliente** a `/checkout/resultado/<pedido>?ref_payco=…`.
+
+Se comprueba que el monto coincida con el del pedido y recién entonces se da por pagado y salen los correos (una sola vez,
+aunque lleguen ambas confirmaciones o se repitan). Si un correo falla, la confirmación responde 500 y ePayco reintenta solo
+ese envío.
 
 - **Envío**: tarifa fija en [`src/data/shipping.ts`](src/data/shipping.ts) (provisional: $15.000; confirmar con Lina). Los productos
   digitales (Guía y Recetario) no cobran envío ni piden dirección: quien despacha recibe la orden de enviarlos por correo.
-- **Pruebas**: `pnpm test:commerce` (precios, firma del webhook, idempotencia, fallos de envío, escape de HTML).
-- Código: `src/lib/commerce/` (lógica), `src/actions/checkout.ts` (crea el pedido), `src/app/api/mercadopago/webhook/`,
-  `src/components/cart/` (carrito y checkout), `src/app/checkout/` (páginas).
-- Reembolsos y cambios de estado por Mercado Pago actualizan el pedido, pero **no** envían correos; el reembolso en sí se hace
-  desde el panel de Mercado Pago.
+- **Pruebas**: `pnpm test:commerce` (precios, firma, estados de ePayco, idempotencia, fallos de envío, mensaje de WhatsApp, escape de HTML).
+- Código: `src/lib/commerce/` (lógica), `src/actions/checkout.ts` (crea el pedido), `src/app/api/epayco/confirmacion/`,
+  `src/components/cart/` (carrito, checkout, ventana de ePayco, paso a WhatsApp), `src/app/checkout/` (páginas).
+- Reembolsos y cambios de estado en ePayco actualizan el pedido, pero **no** envían correos; el reembolso en sí se hace
+  desde el panel de ePayco.
 
 ## Tienda
 

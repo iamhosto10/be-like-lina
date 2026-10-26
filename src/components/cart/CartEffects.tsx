@@ -14,7 +14,7 @@ export function ClearCart() {
 }
 
 /**
- * Mercado Pago puede devolver a la persona antes de avisar al sitio del pago. Mientras el pedido
+ * ePayco puede devolver a la persona antes de avisar al sitio del pago. Mientras el pedido
  * esté «en proceso», se vuelve a consultar cada 5 segundos (máximo 1 minuto).
  */
 export function AutoRefresh({ active }: { active: boolean }) {

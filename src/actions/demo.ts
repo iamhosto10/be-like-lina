@@ -13,7 +13,7 @@ const outcomes = {
 } as const;
 
 /**
- * Modo demostración: simula la respuesta de Mercado Pago y pasa por el MISMO procesamiento
+ * Modo demostración: simula la respuesta de ePayco y pasa por el MISMO procesamiento
  * que el webhook real (`applyPayment`), incluidos los correos. Solo existe con CHECKOUT_DEMO_MODE.
  */
 export async function completeDemoPayment(formData: FormData): Promise<void> {

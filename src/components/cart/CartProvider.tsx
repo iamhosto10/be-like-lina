@@ -28,7 +28,7 @@ interface CartContextValue extends PricedCart {
   count: number;
   /** false en el servidor y en el primer render del navegador (el carrito vive en localStorage). */
   hydrated: boolean;
-  /** Tienda activa (Mercado Pago o modo demostración). Si es false no se muestra carrito. */
+  /** Tienda activa (ePayco o modo demostración). Si es false no se muestra carrito. */
   enabled: boolean;
   demo: boolean;
   open: boolean;

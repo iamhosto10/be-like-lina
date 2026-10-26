@@ -4,10 +4,15 @@ import { notFound } from "next/navigation";
 import { CircleAlert, CircleCheck, Clock } from "lucide-react";
 import { SiWhatsapp } from "@icons-pack/react-simple-icons";
 import { AutoRefresh, ClearCart } from "@/components/cart/CartEffects";
+import { WhatsappHandoff } from "@/components/cart/WhatsappHandoff";
 import { OrderSummary } from "@/components/cart/OrderSummary";
 import { Section } from "@/components/shared/Section";
 import { Button } from "@/components/ui/button";
+import { validateTransaction } from "@/lib/commerce/epayco";
+import { commerce } from "@/lib/commerce/config";
+import { applyPayment } from "@/lib/commerce/process";
 import { getOrder } from "@/lib/commerce/store";
+import { orderWhatsappUrl } from "@/lib/commerce/whatsapp";
 import { whatsappUrl } from "@/lib/links";
 import type { OrderStatus } from "@/lib/commerce/types";
 
@@ -30,12 +35,12 @@ const copy: Record<OrderStatus, { icon: typeof CircleCheck; title: string; text:
   in_process: {
     icon: Clock,
     title: "Tu pago está en revisión",
-    text: "Mercado Pago lo está verificando. Apenas se apruebe te enviaremos el correo de confirmación.",
+    text: "ePayco lo está verificando. Apenas se apruebe te enviaremos el correo de confirmación.",
   },
   rejected: {
     icon: CircleAlert,
     title: "El pago no se completó",
-    text: "Mercado Pago no aprobó el pago. No se te cobró nada. Puedes intentarlo de nuevo con otro medio de pago.",
+    text: "El pago no fue aprobado. No se te cobró nada. Puedes intentarlo de nuevo con otro medio de pago.",
   },
   cancelled: {
     icon: CircleAlert,
@@ -51,10 +56,33 @@ const copy: Record<OrderStatus, { icon: typeof CircleCheck; title: string; text:
 
 export default async function OrderResultPage({
   params,
+  searchParams,
 }: PageProps<"/checkout/resultado/[orderId]">) {
   const { orderId } = await params;
-  const order = await getOrder(orderId);
+  let order = await getOrder(orderId);
   if (!order) notFound();
+
+  // ePayco devuelve a la persona con ?ref_payco=…, a veces antes de avisar por la confirmación.
+  // Se consulta la transacción a ePayco (no se confía en la URL) y se aplica; es idempotente.
+  const ref = (await searchParams).ref_payco;
+  if (
+    commerce.mode === "epayco" &&
+    typeof ref === "string" &&
+    ref &&
+    order.mode === "epayco" &&
+    order.status !== "approved"
+  ) {
+    try {
+      const payment = await validateTransaction(ref);
+      if (payment.externalReference === order.id) {
+        const applied = await applyPayment(payment);
+        if (applied.ok) order = applied.order;
+      }
+    } catch (error) {
+      console.error(`[resultado ${orderId}] No se pudo validar ${ref}:`, error);
+      order = (await getOrder(orderId)) ?? order; // la confirmación de ePayco lo actualizará
+    }
+  }
 
   const { icon: Icon, title, text } = copy[order.status];
   const waiting = order.status === "pending" || order.status === "in_process";
@@ -90,6 +118,10 @@ export default async function OrderResultPage({
               </p>
             )}
           </div>
+
+          {order.status === "approved" && (
+            <WhatsappHandoff url={orderWhatsappUrl(order)} orderId={order.id} />
+          )}
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {failed && (

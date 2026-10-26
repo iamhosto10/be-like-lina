@@ -7,7 +7,7 @@ import type { Order } from "@/lib/commerce/types";
  * Marketplace → Upstash Redis, que crea las variables solo). Sin Redis, en local se usa memoria.
  *
  * En Vercel la memoria NO sirve (cada petición puede caer en otra instancia y el webhook de
- * Mercado Pago no encontraría el pedido), por eso allí `isDurable()` obliga a tener Redis.
+ * ePayco no encontraría el pedido), por eso allí `isDurable()` obliga a tener Redis.
  */
 const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
 const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
@@ -41,7 +41,7 @@ export async function getOrder(id: string): Promise<Order | null> {
 
 /**
  * Reclama una marca de una sola vez (SET NX). Devuelve true solo a quien la obtiene primero:
- * así dos notificaciones simultáneas de Mercado Pago no envían el correo dos veces.
+ * así dos notificaciones simultáneas de ePayco no envían el correo dos veces.
  */
 export async function claim(key: string): Promise<boolean> {
   if (redis) {

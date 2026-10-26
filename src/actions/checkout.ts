@@ -5,12 +5,10 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { departments } from "@/data/shipping";
 import { commerce } from "@/lib/commerce/config";
-import { createPreference } from "@/lib/commerce/mercadopago";
 import { toWhatsappNumber } from "@/lib/commerce/phone";
 import { priceCart } from "@/lib/commerce/pricing";
 import { isDurable, saveOrder } from "@/lib/commerce/store";
 import type { Order } from "@/lib/commerce/types";
-import { siteUrl } from "@/lib/site-url";
 
 export type CheckoutState =
   | { status: "idle" }
@@ -140,7 +138,7 @@ export async function createCheckout(
     createdAt: now,
     updatedAt: now,
     status: "pending",
-    mode: commerce.mode === "mercadopago" ? "mercadopago" : "demo",
+    mode: commerce.mode === "epayco" ? "epayco" : "demo",
     currency: "COP",
     customer: { firstName, lastName, email, phone, document: document || undefined },
     ...(address?.success && { shippingAddress: address.data }),
@@ -148,14 +146,9 @@ export async function createCheckout(
 
   let destination: string;
   try {
-    await saveOrder(order); // primero se guarda: el webhook debe encontrar el pedido
-    if (order.mode === "mercadopago") {
-      const { preferenceId, url } = await createPreference(order, siteUrl);
-      await saveOrder({ ...order, preferenceId });
-      destination = url;
-    } else {
-      destination = `/checkout/demo/${order.id}`;
-    }
+    await saveOrder(order); // primero se guarda: la confirmación de ePayco debe encontrar el pedido
+    destination =
+      order.mode === "epayco" ? `/checkout/pagar/${order.id}` : `/checkout/demo/${order.id}`;
   } catch (error) {
     console.error(`[checkout] No se pudo crear el pago del pedido ${order.id}:`, error);
     return fail(

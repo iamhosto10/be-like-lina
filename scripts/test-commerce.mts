@@ -4,7 +4,7 @@
  *
  * Usa un servidor de correo falso en vez de Resend y el almacén en memoria.
  */
-import { createHmac } from "node:crypto";
+import { createHash } from "node:crypto";
 import { createServer, type IncomingMessage } from "node:http";
 import assert from "node:assert/strict";
 
@@ -29,8 +29,9 @@ await new Promise<void>((r) => mail.listen(0, r));
 const port = (mail.address() as { port: number }).port;
 
 Object.assign(process.env, {
-  MERCADOPAGO_ACCESS_TOKEN: "TEST-token",
-  MERCADOPAGO_WEBHOOK_SECRET: "clave-secreta-de-prueba",
+  EPAYCO_PUBLIC_KEY: "pub_test",
+  EPAYCO_CUSTOMER_ID: "123456",
+  EPAYCO_P_KEY: "clave-privada-de-prueba",
   RESEND_API_KEY: "re_test",
   RESEND_API_URL: `http://127.0.0.1:${port}`,
   ORDER_NOTIFY_EMAIL: "despacho@belikelina.test, apoyo@belikelina.test",
@@ -39,7 +40,8 @@ Object.assign(process.env, {
 
 const { priceCart } = await import("@/lib/commerce/pricing");
 const { toWhatsappNumber } = await import("@/lib/commerce/phone");
-const { verifyWebhookSignature } = await import("@/lib/commerce/mercadopago");
+const { verifyConfirmationSignature, fieldsToPayment } = await import("@/lib/commerce/epayco");
+const { orderWhatsappMessage, orderWhatsappUrl } = await import("@/lib/commerce/whatsapp");
 const { applyPayment } = await import("@/lib/commerce/process");
 const { saveOrder, getOrder } = await import("@/lib/commerce/store");
 const { shipping } = await import("@/data/shipping");
@@ -111,61 +113,42 @@ await test("normaliza celulares colombianos", () => {
   assert.equal(toWhatsappNumber("+1 305 555 0100"), "13055550100");
 });
 
-console.log("Firma del webhook de Mercado Pago");
-const secret = "clave-secreta-de-prueba";
-const sign = (dataId: string, requestId: string, ts: string, key = secret) =>
-  `ts=${ts},v1=${createHmac("sha256", key).update(`id:${dataId};request-id:${requestId};ts:${ts};`).digest("hex")}`;
+console.log("Confirmación de ePayco");
+const sign = (f: Record<string, string>, key = "clave-privada-de-prueba") =>
+  createHash("sha256")
+    .update(
+      ["123456", key, f.x_ref_payco, f.x_transaction_id, f.x_amount, f.x_currency_code].join("^"),
+    )
+    .digest("hex");
+const base = {
+  x_ref_payco: "55001",
+  x_transaction_id: "9001",
+  x_amount: "255000",
+  x_currency_code: "COP",
+  x_cod_response: "1",
+  x_extra1: "BLL-ABCD2345",
+};
 await test("acepta una firma válida", () => {
-  assert(
-    verifyWebhookSignature({
-      dataId: "123456",
-      requestId: "req-1",
-      signature: sign("123456", "req-1", "1700000000"),
-      secret,
-    }),
-  );
+  assert(verifyConfirmationSignature({ ...base, x_signature: sign(base) }));
 });
-await test("el id alfanumérico se firma en minúsculas", () => {
-  assert(
-    verifyWebhookSignature({
-      dataId: "ABC123",
-      requestId: "r",
-      signature: sign("abc123", "r", "1"),
-      secret,
-    }),
-  );
+await test("rechaza: otra clave, monto manipulado, sin firma, firma basura", () => {
+  assert(!verifyConfirmationSignature({ ...base, x_signature: sign(base, "otra") }));
+  assert(!verifyConfirmationSignature({ ...base, x_amount: "1", x_signature: sign(base) }));
+  assert(!verifyConfirmationSignature({ ...base }));
+  assert(!verifyConfirmationSignature({ ...base, x_signature: "basura" }));
 });
-await test("rechaza: otra clave, id distinto, request-id distinto, sin firma, firma mal formada", () => {
-  assert(
-    !verifyWebhookSignature({
-      dataId: "123456",
-      requestId: "req-1",
-      signature: sign("123456", "req-1", "1", "otra-clave"),
-      secret,
-    }),
-  );
-  assert(
-    !verifyWebhookSignature({
-      dataId: "999",
-      requestId: "req-1",
-      signature: sign("123456", "req-1", "1"),
-      secret,
-    }),
-  );
-  assert(
-    !verifyWebhookSignature({
-      dataId: "123456",
-      requestId: "otro",
-      signature: sign("123456", "req-1", "1"),
-      secret,
-    }),
-  );
-  assert(
-    !verifyWebhookSignature({ dataId: "123456", requestId: "req-1", signature: null, secret }),
-  );
-  assert(
-    !verifyWebhookSignature({ dataId: "123456", requestId: "req-1", signature: "basura", secret }),
-  );
+await test("códigos de ePayco → estado interno", () => {
+  const st = (c: string) => fieldsToPayment({ ...base, x_cod_response: c }).status;
+  assert.equal(st("1"), "approved");
+  assert.equal(st("2"), "rejected");
+  assert.equal(st("4"), "rejected");
+  assert.equal(st("3"), "in_process");
+  assert.equal(st("7"), "in_process");
+  assert.equal(st("11"), "cancelled");
+  assert.equal(st("6"), "refunded");
+  const p = fieldsToPayment(base);
+  assert.equal(p.amount, 255000);
+  assert.equal(p.externalReference, "BLL-ABCD2345");
 });
 
 console.log("Procesamiento de pagos y correos");
@@ -190,7 +173,7 @@ function makeOrder(over: Partial<Order> = {}): Order {
     createdAt: "2026-10-20T10:00:00.000Z",
     updatedAt: "2026-10-20T10:00:00.000Z",
     status: "pending",
-    mode: "mercadopago",
+    mode: "epayco",
     currency: "COP",
     customer: {
       firstName: "Ana",
@@ -248,6 +231,27 @@ await test("pago aprobado: un correo al cliente y uno a quien despacha", async (
   assert(desk.html.includes("1065000111") && desk.html.includes("Portería"));
   assert.equal(desk.reply_to, "ana@cliente.test");
   assert(customer.text.length > 50 && desk.text.length > 50, "versión en texto plano");
+});
+await test("el aviso a ventas va a ventas@belikelina.com por defecto", async () => {
+  // (en estas pruebas ORDER_NOTIFY_EMAIL está definido; aquí solo se comprueba el valor de fábrica)
+  const { site } = await import("@/data/site");
+  assert.equal(site.contact.email, "ventas@belikelina.com");
+});
+await test("mensaje de WhatsApp: pedido, productos, total, cliente y dirección", () => {
+  const o = makeOrder();
+  const msg = orderWhatsappMessage(o);
+  for (const part of [
+    o.id,
+    "Proteína Shaker",
+    "Ana Pérez",
+    "300 123 4567",
+    "Calle 10 # 5-20",
+    "Valledupar",
+    "(digital)",
+  ])
+    assert(msg.includes(part), part);
+  assert(msg.includes(`$${o.total.toLocaleString("es-CO")}`));
+  assert(orderWhatsappUrl(o).startsWith("https://wa.me/573012156152?text="));
 });
 await test("idempotente: una notificación repetida no reenvía correos", async () => {
   sent.length = 0;
@@ -323,7 +327,7 @@ await test("si falla el correo a quien despacha: lanza, y el reintento solo repi
   assert.equal(sent.length, 1, "el del cliente sí salió");
   assert(!(await getOrder(o.id))?.notifiedAt);
   failTo = null;
-  const r = await applyPayment(pay(o)); // reintento de Mercado Pago
+  const r = await applyPayment(pay(o)); // reintento de ePayco
   assert(r.ok && r.order.notifiedAt);
   assert.equal(sent.length, 2, "el del cliente no se repite; el de despacho sí");
   assert(sent[1].to.includes("despacho@belikelina.test"));

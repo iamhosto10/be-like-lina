@@ -66,12 +66,11 @@ export interface Order extends PricedCart {
   createdAt: string;
   updatedAt: string;
   status: OrderStatus;
-  /** "demo": pago simulado, sin Mercado Pago. */
-  mode: "mercadopago" | "demo";
+  /** "demo": pago simulado, sin ePayco. */
+  mode: "epayco" | "demo";
   currency: "COP";
   customer: Customer;
   shippingAddress?: ShippingAddress;
-  preferenceId?: string;
   payment?: PaymentInfo;
   /** Cuándo se enviaron los correos de confirmación (existe solo si ya se enviaron). */
   notifiedAt?: string;

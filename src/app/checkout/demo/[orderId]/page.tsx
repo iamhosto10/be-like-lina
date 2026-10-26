@@ -17,7 +17,7 @@ const outcomes = [
 ] as const;
 
 /**
- * Sustituye a la página de Mercado Pago mientras no hay credenciales. Cada botón pasa por el mismo
+ * Sustituye a la ventana de pago de ePayco mientras no hay credenciales. Cada botón pasa por el mismo
  * procesamiento que el webhook real, incluido el envío de correos. Solo existe en modo demostración.
  */
 export default async function DemoPaymentPage({ params }: PageProps<"/checkout/demo/[orderId]">) {
@@ -33,7 +33,7 @@ export default async function DemoPaymentPage({ params }: PageProps<"/checkout/d
           <p className="text-xs font-bold tracking-[0.15em] text-primary uppercase">
             Modo demostración
           </p>
-          <h1 className="mt-3 text-3xl md:text-4xl">Aquí iría Mercado Pago</h1>
+          <h1 className="mt-3 text-3xl md:text-4xl">Aquí iría ePayco</h1>
           <p className="mt-3 text-muted-foreground">
             Elige cómo termina el pago para probar el proceso. No se cobra nada.
           </p>

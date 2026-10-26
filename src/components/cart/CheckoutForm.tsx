@@ -260,16 +260,12 @@ export function CheckoutForm() {
 
           <Button type="submit" size="xl" className="mt-5 w-full" disabled={pending}>
             <LockKeyhole aria-hidden />
-            {pending
-              ? "Un momento…"
-              : cart.demo
-                ? "Pagar (demostración)"
-                : "Pagar con Mercado Pago"}
+            {pending ? "Un momento…" : cart.demo ? "Pagar (demostración)" : "Pagar con ePayco"}
           </Button>
           <p className="mt-3 text-center text-xs text-muted-foreground">
             {cart.demo
               ? "Modo demostración: el pago se simula, no hay cobro real."
-              : "Pagas en la página segura de Mercado Pago: tarjetas, PSE, Nequi y más."}
+              : "Pagas en la ventana segura de ePayco: tarjetas, PSE, Nequi y más."}
           </p>
           <p className="mt-3 text-center text-sm">
             <Link

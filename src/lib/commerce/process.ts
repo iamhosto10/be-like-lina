@@ -1,10 +1,10 @@
 import "server-only";
 import { claim, getOrder, release, saveOrder } from "@/lib/commerce/store";
 import { customerEmail, fulfillmentEmail, sendEmail } from "@/lib/commerce/emails";
-import type { GatewayPayment } from "@/lib/commerce/mercadopago";
+import type { GatewayPayment } from "@/lib/commerce/epayco";
 import type { Order, OrderStatus } from "@/lib/commerce/types";
 
-/** Estado de Mercado Pago → estado del pedido. */
+/** Estado normalizado del pago (ver epayco.ts) → estado del pedido. */
 function mapStatus(status: string): OrderStatus {
   switch (status) {
     case "approved":
@@ -26,11 +26,11 @@ export type ApplyResult =
   | { ok: false; reason: "order_not_found" | "currency" | "amount_mismatch" };
 
 /**
- * Aplica el resultado de un pago a su pedido. Lo llaman por igual el webhook de Mercado Pago y
+ * Aplica el resultado de un pago a su pedido. Lo llaman por igual el webhook de ePayco, la página de resultado y
  * el modo demostración, así que se prueba el mismo camino que en producción.
  *
- * - Es idempotente: Mercado Pago reenvía notificaciones, y los correos salen una sola vez.
- * - Si un envío falla, lanza el error (el webhook responde 500 y Mercado Pago reintenta), y solo se
+ * - Es idempotente: ePayco reenvía notificaciones, y los correos salen una sola vez.
+ * - Si un envío falla, lanza el error (el webhook responde 500 y ePayco reintenta), y solo se
  *   repite el correo que falló.
  */
 export async function applyPayment(payment: GatewayPayment): Promise<ApplyResult> {
@@ -80,7 +80,7 @@ async function notifyOnce(order: Order): Promise<void> {
     try {
       await step.send();
     } catch (error) {
-      await release(step.key); // permite que el reintento de Mercado Pago lo vuelva a probar
+      await release(step.key); // permite que el reintento de ePayco lo vuelva a probar
       throw error;
     }
   }

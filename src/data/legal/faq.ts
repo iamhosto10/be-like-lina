@@ -32,7 +32,7 @@ export const faqItems: FaqItem[] = [
     answer: [
       {
         type: "p",
-        text: "Trabajamos con pasarelas de pago certificadas y seguras, que garantizan la confidencialidad de tu información, la cual incluye Mercadopago.",
+        text: "Trabajamos con pasarelas de pago certificadas y seguras, que garantizan la confidencialidad de tu información, la cual incluye ePayco.",
       },
     ],
   },
@@ -81,7 +81,7 @@ export const faqItems: FaqItem[] = [
       { type: "p", text: "Contamos con todos los métodos de pago:" },
       {
         type: "ul",
-        items: ["Tarjetas de crédito o débito (PSE) por medio de la tienda online. MERCADOPAGO."],
+        items: ["Tarjetas de crédito o débito (PSE) por medio de la tienda online. ePayco."],
       },
     ],
   },
