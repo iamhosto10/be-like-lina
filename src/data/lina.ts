@@ -13,7 +13,7 @@ export const lina = {
       src: "/images/lina/retrato.webp",
       alt: "Retrato de Lina Fuentes",
       width: 1000,
-      height: 1250,
+      height: 1333,
     } satisfies ImageAsset,
     avatar: {
       src: "/images/lina/avatar.webp",

@@ -14,7 +14,7 @@ const pillarIcons = {
 } as const;
 
 export function Hero() {
-  const { headline, subtitle, primaryCta, videoCta, pillars, floatingCard, signature, images } =
+  const { headline, subtitle, primaryCta, videoCta, pillars, floatingCard, signature, image } =
     hero;
 
   return (
@@ -60,7 +60,7 @@ export function Hero() {
         </div>
 
         {/* ── Imagen ────────────────────────────────────────────────────── */}
-        <div className="relative mx-auto w-full max-w-[34rem] self-end lg:mx-0 lg:max-w-none lg:self-stretch">
+        <div className="relative mx-auto w-full max-w-[34rem] self-end pb-12 lg:mx-0 lg:max-w-none lg:self-center lg:pb-0">
           {/* Halo rosa detrás de la figura */}
           <div
             aria-hidden
@@ -88,17 +88,19 @@ export function Hero() {
             ))}
           </p>
 
-          <Image
-            src={images.cutout.src}
-            alt={images.cutout.alt}
-            width={images.cutout.width}
-            height={images.cutout.height}
-            sizes="(min-width: 1024px) 46vw, (min-width: 640px) 34rem, 100vw"
-            quality={85}
-            loading="eager"
-            fetchPriority="high"
-            className="relative z-10 mx-auto block h-auto w-[86%] max-w-[560px] lg:absolute lg:bottom-0 lg:left-[-14%] lg:mx-0 lg:h-[93%] lg:w-auto lg:max-w-none"
-          />
+          <div className="relative z-10 mx-auto aspect-[2/3] w-[78%] max-w-[24rem] overflow-hidden rounded-[2rem] border border-primary/30 shadow-2xl shadow-black/40 lg:my-12 lg:h-[min(76svh,720px)] lg:w-auto lg:max-w-none">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              sizes="(min-width: 1024px) 480px, (min-width: 640px) 24rem, 80vw"
+              quality={85}
+              loading="eager"
+              fetchPriority="high"
+              className="size-full object-cover"
+            />
+          </div>
 
           {/* Tarjeta flotante */}
           <div className="absolute bottom-[10%] left-0 z-20 flex items-center gap-3 rounded-xl bg-brand-white px-4 py-3 text-brand-night shadow-lg shadow-black/25 lg:right-0 lg:bottom-[9%] lg:left-auto lg:px-5 lg:py-4">

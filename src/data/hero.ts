@@ -25,24 +25,11 @@ export const hero = {
   },
   /** Firma decorativa en cursiva. */
   signature: "Be Like Lina",
-  images: {
-    cutout: {
-      src: "/images/hero/lina-cutout.webp",
-      alt: "Lina Fuentes, entrenadora, de pie con enterizo deportivo negro",
-      width: 1200,
-      height: 1097,
-    } satisfies ImageAsset,
-    wide: {
-      src: "/images/hero/lina-wide.webp",
-      alt: "Lina Fuentes, entrenadora, de pie en estudio con fondo oscuro",
-      width: 1672,
-      height: 941,
-    } satisfies ImageAsset,
-    full: {
-      src: "/images/hero/lina-full.webp",
-      alt: "Lina Fuentes, entrenadora, de cuerpo completo en estudio",
-      width: 1086,
-      height: 1448,
-    } satisfies ImageAsset,
-  },
+  /** Foto original de la web anterior (belikelina.com): Lina en el gimnasio. */
+  image: {
+    src: "/images/lina/hero.webp",
+    alt: "Lina Fuentes, entrenadora, sentada en un banco de gimnasio",
+    width: 1100,
+    height: 1650,
+  } satisfies ImageAsset,
 };
