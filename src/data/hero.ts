@@ -11,11 +11,11 @@ export const hero = {
     highlightIndex: 1,
   },
   subtitle:
-    "Entrenamientos inteligentes, nutrición real y mentalidad para transformar tu cuerpo y tu vida.",
+    "Entrenamientos integrales y nutrición real basada en ciencia para transformar tu cuerpo y tu mente.",
   primaryCta: { label: "Empieza hoy", href: "/#planes" },
   videoCta: { label: "Ver video" },
   pillars: [
-    { icon: "dumbbell", label: "Entrenamientos inteligentes" },
+    { icon: "dumbbell", label: "Entrenamientos integrales" },
     { icon: "salad", label: "Nutrición real" },
     { icon: "heart", label: "Mentalidad fuerte" },
   ] as const,

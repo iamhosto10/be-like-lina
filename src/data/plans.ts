@@ -26,9 +26,9 @@ export const plans: Plan[] = [
     price: 500000,
     priceNote: "pago único",
     features: [
-      "Entrenamiento estructurado según tus características físicas",
-      "Progresión semanal",
-      "Seguimiento y ajustes por WhatsApp",
+      "Entrenamiento estructurado según tu requerimiento",
+      "Asesoría de nutrición y suplementación",
+      "Seguimiento y ajustes constantes",
     ],
     icon: "dumbbell",
     iconTone: "violet",

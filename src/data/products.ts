@@ -15,7 +15,7 @@ export const products: Product[] = [
     category: "proteina",
     price: 220000,
     spec: "Aislada de suero · 900 g · con BCAAs y prebióticos",
-    tagline: "Proteína limpia para recuperar después de entrenar.",
+    tagline: "Proteína whey ideal para alcanzar tu requerimiento proteico de una forma más fácil y divertida.",
     description: [
       "Proteína Shaker es aislada de suero de leche (whey limpia), con aminoácidos esenciales y prebióticos. Cada scoop aporta 25 g de proteína, el apoyo que tu cuerpo necesita para recuperarse y mantener masa muscular.",
       "Se mezcla fácil en agua o leche vegetal. Sabor chocolate (cacao).",
@@ -50,7 +50,7 @@ export const products: Product[] = [
     category: "proteina",
     price: 220000,
     spec: "Aislada de suero · 900 g · con BCAAs y prebióticos",
-    tagline: "La misma proteína limpia, en sabor vainilla.",
+    tagline: "Proteína whey ideal para alcanzar tu requerimiento proteico de una forma más fácil y divertida.",
     description: [
       "Proteína Shaker es aislada de suero de leche (whey limpia), con aminoácidos esenciales y prebióticos. Cada scoop aporta 25 g de proteína, el apoyo que tu cuerpo necesita para recuperarse y mantener masa muscular.",
       "Se mezcla fácil en agua o leche vegetal. Sabor vainilla.",
@@ -85,7 +85,7 @@ export const products: Product[] = [
     category: "pre-entreno",
     price: 145000,
     spec: "Guaraná, maca, borojó y chontaduro · 900 g · sin azúcar",
-    tagline: "Energía natural para entrenar con todo.",
+    tagline: "Energía natural para entrenar sin terminar agotado.",
     description: [
       "Pre-entreno de frutos silvestres con guaraná, maca, borojó y chontaduro: ingredientes que la tradición colombiana usa para resistencia y vitalidad, en una fórmula sin azúcar.",
       "Tómalo entre 20 y 30 minutos antes de entrenar. Sabor a frutos rojos.",
@@ -122,12 +122,12 @@ export const products: Product[] = [
     tagline: "Qué comer cada día, explicado sin complicaciones.",
     description: [
       "La Guía de Alimentación Saludable está diseñada para orientarte sobre qué alimentos elegir para una dieta equilibrada: mejorar tu nutrición, prevenir enfermedades y sostener tu bienestar.",
-      "Incluye desayunos, almuerzos, snacks y cenas saludables, y viene con asesoría personalizada de Lina.",
+      "Incluye desayunos, almuerzos, cenas y snacks saludables, viene con asesoría de Lina.",
     ],
     highlights: [
-      "Desayunos, almuerzos, snacks y cenas",
+      "Desayunos, almuerzos, cenas y snacks",
       "Recetas prácticas para el día a día",
-      "Asesoría personalizada incluida",
+      "Asesoría incluida",
       "Formato digital: la recibes al comprar",
     ],
     specs: [
@@ -252,7 +252,7 @@ export const products: Product[] = [
     category: "digital",
     price: 90000,
     spec: "Digital · batidos antioxidantes, detox y desinflamatorios",
-    tagline: "Batidos que además de ricos, cumplen una función.",
+    tagline: "Batidos a base de vegetales y frutas (vitaminas y minerales) que cumplen cada uno una función.",
     description: [
       "Con este recetario sacas el máximo provecho en nutrientes, vitaminas y minerales. Cada batido está pensado para un objetivo concreto, con ingredientes naturales que consigues en cualquier mercado.",
     ],
@@ -304,8 +304,8 @@ export const storeGroups = [
   },
   {
     id: "endulzantes",
-    title: "Endulzantes",
-    description: "Stevia líquida sin calorías, en dos presentaciones.",
+    title: "Endulcorante natural",
+    description: "Stevia líquida orgánica sin calorías apta para diabéticos en dos presentaciones.",
     categories: ["endulzante"] as ProductCategory[],
   },
 ];
