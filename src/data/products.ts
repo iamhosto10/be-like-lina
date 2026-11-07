@@ -17,8 +17,8 @@ export const products: Product[] = [
     spec: "Aislada de suero · 900 g · con BCAAs y prebióticos",
     tagline: "Proteína whey ideal para alcanzar tu requerimiento proteico de una forma más fácil y divertida.",
     description: [
-      "Proteína Shaker es aislada de suero de leche (whey limpia), con aminoácidos esenciales y prebióticos. Cada scoop aporta 25 g de proteína, el apoyo que tu cuerpo necesita para recuperarse y mantener masa muscular.",
-      "Se mezcla fácil en agua o leche vegetal. Sabor chocolate (cacao).",
+      "Proteína Shaker aislada de suero de leche (whey), con aminoácidos esenciales y prebióticos. Cada scoop aporta 25 g de proteína, el apoyo que tu cuerpo necesita para recuperarse y mantener masa muscular.",
+      "Se mezcla fácil en agua. Sabor chocolate (cacao).",
     ],
     highlights: [
       "Proteína aislada de suero de leche (whey limpia)",
@@ -27,10 +27,10 @@ export const products: Product[] = [
       "25 g de proteína por scoop",
     ],
     specs: [
-      { label: "Presentación", value: "900 g · 29 porciones" },
+      { label: "Presentación", value: "900 g · 29 servicios" },
       { label: "Proteína por scoop", value: "25 g" },
       { label: "Sabor", value: "Chocolate (cacao)" },
-      { label: "Modo de uso", value: "1 scoop en 250 ml de agua o leche vegetal" },
+      { label: "Modo de uso", value: "1 scoop en 250 ml de agua" },
     ],
     image: {
       src: "/images/productos/shaker-chocolate.webp",
@@ -52,8 +52,8 @@ export const products: Product[] = [
     spec: "Aislada de suero · 900 g · con BCAAs y prebióticos",
     tagline: "Proteína whey ideal para alcanzar tu requerimiento proteico de una forma más fácil y divertida.",
     description: [
-      "Proteína Shaker es aislada de suero de leche (whey limpia), con aminoácidos esenciales y prebióticos. Cada scoop aporta 25 g de proteína, el apoyo que tu cuerpo necesita para recuperarse y mantener masa muscular.",
-      "Se mezcla fácil en agua o leche vegetal. Sabor vainilla.",
+      "Proteína Shaker aislada de suero de leche (whey), con aminoácidos esenciales y prebióticos. Cada scoop aporta 25 g de proteína, el apoyo que tu cuerpo necesita para recuperarse y mantener masa muscular.",
+      "Se mezcla fácil en agua. Sabor vainilla.",
     ],
     highlights: [
       "Proteína aislada de suero de leche (whey limpia)",
@@ -62,10 +62,10 @@ export const products: Product[] = [
       "25 g de proteína por scoop",
     ],
     specs: [
-      { label: "Presentación", value: "900 g · 29 porciones" },
+      { label: "Presentación", value: "900 g · 29 servicios" },
       { label: "Proteína por scoop", value: "25 g" },
       { label: "Sabor", value: "Vainilla" },
-      { label: "Modo de uso", value: "1 scoop en 250 ml de agua o leche vegetal" },
+      { label: "Modo de uso", value: "1 scoop en 250 ml de agua" },
     ],
     image: {
       src: "/images/productos/shaker-vainilla.webp",
@@ -93,11 +93,10 @@ export const products: Product[] = [
     highlights: [
       "Con guaraná, maca, borojó y chontaduro",
       "0 azúcar",
-      "900 g · 29 porciones",
       "Ideal 20–30 minutos antes de entrenar",
     ],
     specs: [
-      { label: "Presentación", value: "900 g · 29 porciones" },
+      { label: "Presentación", value: "400 gramos 20 servicios" },
       { label: "Sabor", value: "Frutos rojos" },
       { label: "Azúcar", value: "0 g" },
       { label: "Modo de uso", value: "1 scoop en agua, 20–30 min antes de entrenar" },
@@ -119,10 +118,10 @@ export const products: Product[] = [
     category: "digital",
     price: 170000,
     spec: "Digital · desayunos, almuerzos, snacks y cenas",
-    tagline: "Qué comer cada día, explicado sin complicaciones.",
+    tagline: "Alimentación balanceada que aporta nutrientes para alcanzar tu máximo desarrollo",
     description: [
       "La Guía de Alimentación Saludable está diseñada para orientarte sobre qué alimentos elegir para una dieta equilibrada: mejorar tu nutrición, prevenir enfermedades y sostener tu bienestar.",
-      "Incluye desayunos, almuerzos, cenas y snacks saludables, viene con asesoría de Lina.",
+      "Incluye desayunos, almuerzos, cenas y snacks saludables.",
     ],
     highlights: [
       "Desayunos, almuerzos, cenas y snacks",
@@ -132,7 +131,6 @@ export const products: Product[] = [
     ],
     specs: [
       { label: "Formato", value: "Digital (PDF)" },
-      { label: "Incluye", value: "Asesoría personalizada" },
       { label: "Entrega", value: "Después de confirmar el pago" },
     ],
     image: {
@@ -153,21 +151,23 @@ export const products: Product[] = [
     category: "antioxidante",
     price: 180000,
     spec: "Antioxidante en cápsulas · 60 unidades",
-    tagline: "Un antioxidante potente para la piel, la energía y las defensas.",
+    tagline: "Potente antioxidante con prueba científica.",
     description: [
       "Santtina es un antioxidante potente con múltiples beneficios para la salud: piel y cabello, sistema cardiovascular, resistencia muscular, defensas, salud cerebral, gástrica y visual.",
       "Una cápsula al día, acompañada de una comida.",
     ],
     highlights: [
-      "Salud de la piel y el cabello",
-      "Salud cardiovascular y resistencia muscular",
-      "Función inmune y salud cerebral",
-      "Agudeza y salud ocular",
-      "Ayuda a frenar el envejecimiento celular",
+      "Salud de la piel",
+      "Salud cardiovascular",
+      "Resistencia muscular",
+      "Función inmune",
+      "Salud cerebral",
+      "Salud gástrica",
+      "Agudeza visual y salud ocular",
     ],
     specs: [
       { label: "Presentación", value: "60 cápsulas" },
-      { label: "Modo de uso", value: "1 cápsula al día con una comida" },
+      { label: "Modo de uso", value: "Modo de uso: 1 cápsula al día" },
     ],
     image: {
       src: "/images/productos/santtina.webp",
@@ -189,18 +189,17 @@ export const products: Product[] = [
     spec: "Endulzante líquido · 0 calorías · 1.000 porciones",
     tagline: "Endulza sin azúcar y sin calorías.",
     description: [
-      "Endulzante líquido de stevia: solo agua y hoja de stevia. Sin calorías, sin grasas y sin azúcares.",
-      "Con 3 a 5 gotas endulzas una bebida. El frasco de 250 ml rinde cerca de 1.000 porciones. Apto para adultos y niños mayores de 4 años.",
+      "Endulzante líquido de stevia: solo hoja y agua de stevia. Sin calorías, sin grasas y sin azúcares.",
+      "Con 3 a 5 gotas endulzas una bebida",
     ],
     highlights: [
-      "Ingredientes: agua y hoja de stevia",
+      "Ingredientes: hoja y agua de stevia",
       "0 calorías, 0 grasas, 0 azúcares",
       "Rinde ~1.000 porciones de 0,25 ml",
       "Apto para adultos y niños mayores de 4 años",
     ],
     specs: [
       { label: "Presentación", value: "250 ml" },
-      { label: "Rendimiento", value: "~1.000 porciones de 0,25 ml" },
       { label: "Modo de uso", value: "3 a 5 gotas por bebida" },
     ],
     image: {
@@ -221,12 +220,13 @@ export const products: Product[] = [
     category: "endulzante",
     price: 21000,
     spec: "Endulzante líquido · 0 calorías · formato de bolsillo",
-    tagline: "El mismo endulzante natural, en tamaño para llevar.",
+    tagline: "Endulza sin azúcar y sin calorías.",
     description: [
-      "Endulzante natural de 100 ml: solo agua y hoja de stevia. El formato pequeño cabe en el bolso y es perfecto para la oficina o los viajes.",
+      "Endulzante líquido de stevia: solo hoja y agua de stevia. Sin calorías, sin grasas y sin azúcares.",
+      "Con 3 a 5 gotas endulzas una bebida.",
     ],
     highlights: [
-      "Ingredientes: agua y hoja de stevia",
+      "Ingredientes: hoja y agua de stevia",
       "0 calorías, 0 grasas, 0 azúcares",
       "Formato de bolsillo",
     ],
@@ -257,11 +257,11 @@ export const products: Product[] = [
       "Con este recetario sacas el máximo provecho en nutrientes, vitaminas y minerales. Cada batido está pensado para un objetivo concreto, con ingredientes naturales que consigues en cualquier mercado.",
     ],
     highlights: [
-      "Batidos antioxidantes",
-      "Batidos con aloe vera",
-      "Batidos hidratantes",
-      "Batidos detox",
-      "Batidos desinflamatorios",
+      "Batido antioxidante",
+      "Batido con aloe vera",
+      "Batido hidratante",
+      "Batido detox",
+      "Batido desinflamatorio",
     ],
     specs: [
       { label: "Formato", value: "Digital (PDF)" },
@@ -299,12 +299,12 @@ export const storeGroups = [
   {
     id: "digitales",
     title: "Guías y recetarios",
-    description: "Contenido digital que recibes al comprar, con asesoría de Lina.",
+    description: "Contenido digital que recibes al comprar",
     categories: ["digital"] as ProductCategory[],
   },
   {
     id: "endulzantes",
-    title: "Endulcorante natural",
+    title: "Edulcorante natural",
     description: "Stevia líquida orgánica sin calorías apta para diabéticos en dos presentaciones.",
     categories: ["endulzante"] as ProductCategory[],
   },

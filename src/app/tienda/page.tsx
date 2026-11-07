@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Section } from "@/components/shared/Section";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { ProductGrid } from "@/components/shared/ProductGrid";
-import { PlanCard } from "@/components/shared/PlanCard";
+import { PlanCard, plansGridClass, planSpanClass } from "@/components/shared/PlanCard";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { plans } from "@/data/plans";
 import { sortedProducts, storeGroups } from "@/data/products";
@@ -72,14 +72,14 @@ export default function StorePage() {
           id="servicios-titulo"
           className="text-xl font-bold tracking-tight uppercase md:text-2xl"
         >
-          Planes y programas con Lina
+          Programas de entrenamiento & planes nutricionales
         </h2>
         <p className="mt-1.5 mb-7 text-sm text-muted-foreground md:text-base">
           Elige el que se adapta a tus objetivos
         </p>
-        <div className="grid gap-5 md:grid-cols-2 md:gap-x-6 md:gap-y-0">
-          {plans.map((plan) => (
-            <PlanCard key={plan.slug} plan={plan} />
+        <div className={plansGridClass}>
+          {plans.map((plan, i) => (
+            <PlanCard key={plan.slug} plan={plan} className={planSpanClass(i, plans.length)} />
           ))}
         </div>
       </Section>

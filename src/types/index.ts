@@ -60,7 +60,7 @@ export interface Product {
   order: number;
 }
 
-export type PlanIcon = "apple" | "dumbbell";
+export type PlanIcon = "apple" | "dumbbell" | "mix";
 
 export interface Plan {
   slug: string;

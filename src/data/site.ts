@@ -11,7 +11,7 @@ export const site = {
   name: "Be Like Lina",
   shortName: "BLL",
   tagline:
-    "Entrenamientos inteligentes, nutrición real y mentalidad para transformar tu cuerpo y tu vida.",
+    "Entrenamientos integrales, nutrición real y mentalidad para transformar tu cuerpo y tu vida.",
   /** Meta description (≤ 155 caracteres para que Google no la corte). */
   description:
     "Lina Fuentes, entrenadora integral para la mujer. Planes de nutrición y entrenamiento personalizados, suplementos y recetas desde Valledupar, Colombia.",

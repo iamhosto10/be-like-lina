@@ -17,8 +17,18 @@ const iconTones = {
   violet: "bg-brand-violet text-brand-white",
 } as const;
 
+/** Cuadrícula de las tarjetas: 1 columna en móvil, 2 en tablet y 3 en escritorio. */
+export const plansGridClass =
+  "grid gap-5 md:grid-cols-2 md:gap-x-6 md:gap-y-5 lg:grid-cols-3 lg:gap-x-5";
+
+/** En tablet, una tarjeta suelta (número impar) ocupa las dos columnas para no quedar a medias. */
+export function planSpanClass(index: number, total: number) {
+  return index === total - 1 && total % 2 === 1 ? "md:col-span-2 lg:col-span-1" : undefined;
+}
+
 export function PlanCard({ plan, className }: PlanCardProps) {
-  const Icon = icons[plan.icon];
+  // "mix" muestra la manzana y la mancuerna juntas (planes que combinan nutrición y entrenamiento).
+  const Icon = plan.icon === "mix" ? null : icons[plan.icon];
   const highlighted = Boolean(plan.highlight);
 
   return (
@@ -46,7 +56,14 @@ export function PlanCard({ plan, className }: PlanCardProps) {
             iconTones[plan.iconTone],
           )}
         >
-          <Icon className="size-7" strokeWidth={1.75} />
+          {Icon ? (
+            <Icon className="size-7" strokeWidth={1.75} />
+          ) : (
+            <span className="flex items-center gap-1">
+              <Apple className="size-5" strokeWidth={1.75} />
+              <Dumbbell className="size-5" strokeWidth={1.75} />
+            </span>
+          )}
         </span>
         <div className="min-w-0">
           <h3 className="text-lg leading-tight font-bold md:text-xl">{plan.name}</h3>

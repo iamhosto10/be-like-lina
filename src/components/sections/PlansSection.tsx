@@ -1,6 +1,6 @@
 import { Section } from "@/components/shared/Section";
 import { SectionHeader } from "@/components/shared/SectionHeader";
-import { PlanCard } from "@/components/shared/PlanCard";
+import { PlanCard, plansGridClass, planSpanClass } from "@/components/shared/PlanCard";
 import { plans } from "@/data/plans";
 import { site } from "@/data/site";
 
@@ -9,15 +9,19 @@ export function PlansSection() {
     <Section tone="light" id="planes" aria-labelledby="planes-titulo">
       <SectionHeader
         number={3}
-        title="Planes de entrenamiento"
+        title="Programas de entrenamiento & planes nutricionales"
         subtitle="Elige el plan que se adapta a tus objetivos."
         titleId="planes-titulo"
         action={{ label: "Ver todos los planes", href: "/tienda#servicios" }}
       />
 
-      <div className="grid gap-5 md:grid-cols-2 md:gap-x-6 md:gap-y-0" aria-label="Planes">
-        {plans.map((plan) => (
-          <PlanCard key={plan.slug} plan={plan} />
+      <div className={plansGridClass} aria-label="Planes">
+        {plans.map((plan, i) => (
+          <PlanCard
+            key={plan.slug}
+            plan={plan}
+            className={planSpanClass(i, plans.length)}
+          />
         ))}
       </div>
 
