@@ -43,7 +43,7 @@ export const organizationSchema: Organization = {
   "@id": ORG_ID,
   name: site.name,
   url: siteUrl,
-  logo: absoluteUrl("/images/logo/logo-blanco.webp"),
+  logo: absoluteUrl("/images/logo/logo-rosado.webp"),
   image: absoluteUrl(lina.images.og.src),
   description: site.description,
   foundingDate: String(lina.since),

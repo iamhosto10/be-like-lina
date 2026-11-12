@@ -53,11 +53,11 @@ export async function sendEmail(email: Email): Promise<SendResult> {
 const C = {
   night: "#150915",
   pink: "#f28cbf",
-  plum: "#c40554",
-  ice: "#feeef3",
+  plum: "#8f3568",
+  ice: "#fbeef5",
   text: "#241323",
   muted: "#6b6270",
-  border: "#fdd9e5",
+  border: "#f6cfe0",
 };
 
 const esc = (s: string) =>

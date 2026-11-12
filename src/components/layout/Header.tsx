@@ -67,12 +67,11 @@ export function Header() {
 
   return (
     <header
-      data-tone="dark"
+      data-tone="light"
       className={cn(
-        "fixed inset-x-0 top-0 z-40 text-foreground transition-[background-color,border-color,backdrop-filter] duration-300",
-        scrolled
-          ? "border-b border-border bg-background/85 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent",
+        // Barra blanca fija (como la referencia): ahí el logo rosa del PDF se ve limpio.
+        "fixed inset-x-0 top-0 z-40 border-b border-border bg-brand-white/95 text-foreground backdrop-blur-md transition-shadow duration-300",
+        scrolled && "shadow-sm",
       )}
     >
       <div className="container-site flex h-16 items-center justify-between gap-6 md:h-20">

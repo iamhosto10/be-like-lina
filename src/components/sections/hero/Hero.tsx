@@ -26,7 +26,8 @@ export function Hero() {
             {headline.lines.map((line, i) => (
               <span
                 key={line}
-                className={i === headline.highlightIndex ? "block text-primary" : "block"}
+                // Palabra destacada en el rosa fuerte de la paleta: solo vale para texto grande.
+                className={i === headline.highlightIndex ? "block text-brand-rose-600" : "block"}
               >
                 {line}
               </span>
@@ -64,7 +65,7 @@ export function Hero() {
           {/* Halo rosa detrás de la figura */}
           <div
             aria-hidden
-            className="absolute top-[6%] left-1/2 aspect-square w-[80%] -translate-x-1/2 rounded-full bg-brand-white/40 blur-[90px] lg:top-[10%] lg:w-[min(80%,620px)]"
+            className="absolute top-[6%] left-1/2 aspect-square w-[80%] -translate-x-1/2 rounded-full bg-brand-pink/40 blur-[90px] lg:top-[10%] lg:w-[min(80%,620px)]"
           />
           {/* Patrón de puntos */}
           <div
@@ -72,14 +73,14 @@ export function Hero() {
             className="pointer-events-none absolute right-0 bottom-[26%] z-20 hidden size-28 opacity-40 lg:block"
             style={{
               backgroundImage:
-                "radial-gradient(circle, var(--brand-white) 1.5px, transparent 1.6px)",
+                "radial-gradient(circle, var(--brand-pink) 1.5px, transparent 1.6px)",
               backgroundSize: "14px 14px",
             }}
           />
           {/* Firma decorativa */}
           <p
             aria-hidden
-            className="pointer-events-none absolute top-[16%] right-0 z-20 hidden origin-right -rotate-6 font-script text-6xl leading-[0.95] text-brand-white drop-shadow-[0_2px_8px_rgb(21_9_21/0.45)] lg:block xl:text-7xl"
+            className="pointer-events-none absolute top-[16%] right-0 z-20 hidden origin-right -rotate-6 font-script text-6xl leading-[0.95] text-brand-rose-600 lg:block xl:text-7xl"
           >
             {signature.split(" ").map((word) => (
               <span key={word} className="block">
@@ -88,7 +89,7 @@ export function Hero() {
             ))}
           </p>
 
-          <div className="relative z-10 mx-auto aspect-[2/3] w-[78%] max-w-[24rem] overflow-hidden rounded-[2rem] border border-primary/30 shadow-2xl shadow-black/40 lg:my-12 lg:h-[min(76svh,720px)] lg:w-auto lg:max-w-none">
+          <div className="relative z-10 mx-auto aspect-[2/3] w-[78%] max-w-[24rem] overflow-hidden rounded-[2rem] border border-primary/30 shadow-2xl shadow-brand-plum/25 lg:my-12 lg:h-[min(76svh,720px)] lg:w-auto lg:max-w-none">
             <Image
               src={image.src}
               alt={image.alt}
