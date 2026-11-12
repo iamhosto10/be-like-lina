@@ -18,7 +18,8 @@ export function Breadcrumbs({ items, className }: { items: Crumb[]; className?: 
             {item.href ? (
               <Link
                 href={item.href}
-                className="rounded-sm outline-none hover:text-foreground hover:underline hover:underline-offset-4 focus-visible:ring-3 focus-visible:ring-ring/50"
+                // py-1.5 + -my-1.5: zona táctil de 32 px sin mover nada del diseño.
+                className="-my-1.5 rounded-sm py-1.5 outline-none hover:text-foreground hover:underline hover:underline-offset-4 focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 {item.label}
               </Link>

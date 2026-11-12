@@ -46,7 +46,7 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   const showNumber = site.showSectionNumbers && typeof number === "number";
   const actionClass =
-    "group inline-flex items-center gap-1.5 text-sm font-semibold text-primary whitespace-nowrap rounded-sm outline-none transition-colors hover:underline hover:underline-offset-4 focus-visible:ring-3 focus-visible:ring-ring/50";
+    "group -my-2 inline-flex items-center gap-1.5 py-2 text-sm font-semibold text-primary whitespace-nowrap rounded-sm outline-none transition-colors hover:underline hover:underline-offset-4 focus-visible:ring-3 focus-visible:ring-ring/50";
 
   return (
     <div
