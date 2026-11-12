@@ -41,7 +41,7 @@ export function PostCard({ post, className }: PostCardProps) {
         ) : (
           <div
             aria-hidden
-            className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-wine to-brand-elevated text-primary/45"
+            className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-rose-200 to-brand-rose-300 text-primary/60"
           >
             <Icon className="size-12" strokeWidth={1.25} />
           </div>

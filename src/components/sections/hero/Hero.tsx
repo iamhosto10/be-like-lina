@@ -64,7 +64,7 @@ export function Hero() {
           {/* Halo rosa detrás de la figura */}
           <div
             aria-hidden
-            className="absolute top-[6%] left-1/2 aspect-square w-[80%] -translate-x-1/2 rounded-full bg-brand-pink/30 blur-[90px] lg:top-[10%] lg:w-[min(80%,620px)]"
+            className="absolute top-[6%] left-1/2 aspect-square w-[80%] -translate-x-1/2 rounded-full bg-brand-white/40 blur-[90px] lg:top-[10%] lg:w-[min(80%,620px)]"
           />
           {/* Patrón de puntos */}
           <div
@@ -72,14 +72,14 @@ export function Hero() {
             className="pointer-events-none absolute right-0 bottom-[26%] z-20 hidden size-28 opacity-40 lg:block"
             style={{
               backgroundImage:
-                "radial-gradient(circle, var(--brand-pink) 1.5px, transparent 1.6px)",
+                "radial-gradient(circle, var(--brand-white) 1.5px, transparent 1.6px)",
               backgroundSize: "14px 14px",
             }}
           />
           {/* Firma decorativa */}
           <p
             aria-hidden
-            className="pointer-events-none absolute top-[16%] right-0 z-20 hidden origin-right -rotate-6 font-script text-6xl leading-[0.95] text-primary lg:block xl:text-7xl"
+            className="pointer-events-none absolute top-[16%] right-0 z-20 hidden origin-right -rotate-6 font-script text-6xl leading-[0.95] text-brand-white drop-shadow-[0_2px_8px_rgb(21_9_21/0.45)] lg:block xl:text-7xl"
           >
             {signature.split(" ").map((word) => (
               <span key={word} className="block">

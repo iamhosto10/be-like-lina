@@ -18,7 +18,7 @@ function BookCoverPlaceholder({ title }: { title: string }) {
       <p className="mt-2 text-xl leading-tight font-extrabold tracking-tight">{title}</p>
       <span className="mt-4 h-0.5 w-10 rounded-full bg-brand-pink-deep" />
       <div className="mt-auto flex items-end justify-between">
-        <span className="font-script text-2xl leading-none text-brand-pink-deep">Lina</span>
+        <span className="font-script text-2xl leading-none text-brand-plum">Lina</span>
         <Salad className="size-7 text-brand-plum/70" strokeWidth={1.5} />
       </div>
     </div>

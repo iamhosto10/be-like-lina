@@ -52,12 +52,12 @@ export async function sendEmail(email: Email): Promise<SendResult> {
 // Los clientes de correo no soportan variables CSS: los colores van fijos (mismos de globals.css).
 const C = {
   night: "#150915",
-  pink: "#ff93ce",
-  plum: "#8e2f67",
-  ice: "#fff0f8",
+  pink: "#f28cbf",
+  plum: "#c40554",
+  ice: "#feeef3",
   text: "#241323",
   muted: "#6b6270",
-  border: "#ebd5e4",
+  border: "#fdd9e5",
 };
 
 const esc = (s: string) =>

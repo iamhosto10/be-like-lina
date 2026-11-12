@@ -16,8 +16,8 @@ const heights = { sm: "h-9", md: "h-10 md:h-12", lg: "h-12 md:h-14" } as const;
 const LOGO = { src: "/images/logo/logo-blanco.webp", width: 384, height: 139 };
 
 /**
- * Logotipo oficial (símbolo + «BE LIKE LINA»), versión blanca.
- * Header y footer son siempre oscuros, así que basta con esta versión.
+ * Logotipo oficial (símbolo + «BE LIKE LINA»). El archivo es blanco; como header y footer
+ * ahora van sobre rosado, `brightness-0` lo pinta negro para que se lea (contraste > 7:1).
  */
 export function Logo({ className, size = "md", eager = false }: LogoProps) {
   return (
@@ -37,7 +37,7 @@ export function Logo({ className, size = "md", eager = false }: LogoProps) {
         sizes="(min-width: 768px) 166px, 138px"
         loading={eager ? "eager" : "lazy"}
         fetchPriority={eager ? "high" : undefined}
-        className={cn("w-auto", heights[size])}
+        className={cn("w-auto brightness-0", heights[size])}
       />
     </Link>
   );

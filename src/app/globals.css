@@ -16,11 +16,23 @@
    Nada más abajo debe llevar un hex escrito a mano.
    ════════════════════════════════════════════════════════════════════════ */
 :root {
-  /* Rosados */
-  --brand-pink: #ff93ce; /* Rosa Digital · acento principal (elegido por la clienta) */
-  --brand-pink-deep: #d85a9f; /* Rosa Profundo · secundario */
-  --brand-plum: #8e2f67; /* Ciruela · botón primario sobre fondo claro, sección de captación */
-  --brand-violet: #7a5af8; /* Violeta · acento puntual (icono del plan de entrenamiento) */
+  /* Rosados — paleta del logo (logo-lina-rosado.pdf), de claro a fuerte:
+     #FDD9E5 · #FEC2D6 · #F99DBC · #F28CBF · #FC72A6 · #F53480 · #FE0369 */
+  --brand-pink: #f28cbf; /* Rosa Lina · el rosa del logo · acento principal sobre fondo oscuro */
+  --brand-pink-deep: #fc72a6; /* Rosa Intenso · secundario */
+  /* Fucsia profundo: es el #FE0369 de la paleta oscurecido un 25 % con el fondo oscuro.
+     La paleta no tiene un rosa lo bastante oscuro para texto: #FE0369 con texto blanco da
+     3,9:1 (no pasa), este da 6:1. Se usa en el botón primario sobre fondo claro, los enlaces
+     sobre fondo claro y la sección de captación. */
+  --brand-plum: #c40554;
+  --brand-violet: #f53480; /* Magenta · acento puntual (icono del programa de entrenamiento) */
+
+  /* Resto de la paleta del logo — son los FONDOS de las secciones */
+  --brand-rose-100: #fdd9e5; /* tarjetas y respiros */
+  --brand-rose-200: #fec2d6;
+  --brand-rose-300: #f99dbc; /* fondo alterno */
+  --brand-rose-600: #f53480; /* sección de captación */
+  /* (#F28CBF = --brand-pink es el fondo principal · #FC72A6 = --brand-pink-deep es el footer) */
 
   /* Morados oscuros (fondos) */
   --brand-night: #150915; /* fondo oscuro base · hero, tienda… (elegido por la clienta) */
@@ -29,19 +41,27 @@
   --brand-deep: #0d050d; /* footer */
 
   /* Claros (fondos de respiro) */
-  --brand-ice: #fff0f8; /* Rosa Hielo · secciones claras */
-  --brand-mist: #f4f1f5; /* Niebla · fondo claro secundario */
+  --brand-ice: #feeef3; /* Rosa Hielo · el #FDD9E5 de la paleta aclarado · secciones claras */
+  --brand-mist: #fde4ec; /* Niebla rosada · fondo claro secundario */
   --brand-white: #ffffff;
 
   /* Texto */
   --brand-text-on-dark: #ffffff;
   --brand-text-on-dark-muted: #c4b2c1;
   --brand-text-on-light: #150915;
-  --brand-text-on-light-muted: #6b6270;
+  --brand-text-on-light-muted: #5c4553; /* gris cálido · 7,7:1 sobre las secciones claras */
+
+  /* Texto sobre fondos rosados. Ratios sobre #F28CBF / #F99DBC / #FC72A6:
+     principal ≥ 7,5:1 · tenue ≥ 5,5:1 · acento (enlaces pequeños) ≥ 5:1
+     El tenue es el negro al 80 %: neutro, para que no se confunda con el acento baya. */
+  --brand-text-on-pink: #150915;
+  --brand-text-on-pink-muted: color-mix(in srgb, var(--brand-night) 80%, transparent);
+  --brand-berry: #5e0f40;
 
   /* Bordes */
   --brand-border-on-dark: #3d2338;
-  --brand-border-on-light: #ebd5e4;
+  --brand-border-on-light: #fdd9e5; /* el rosa más claro de la paleta */
+  --brand-border-on-pink: color-mix(in oklch, var(--brand-night), transparent 78%);
 
   /* Utilidad */
   --brand-whatsapp: #25d366;
@@ -55,68 +75,70 @@
    Cada sección declara su tono con data-tone y todo lo que hay dentro
    toma el color correcto de forma automática.
 
-   El tono por defecto del documento es OSCURO porque el sitio es oscuro-
-   dominante: así el header y el body nunca parpadean en blanco.
+   El tono por defecto del documento es «rosa» (el fondo principal): así el
+   header y el body nunca parpadean en blanco.
+
+   Los nombres de los tonos (dark, wine, deep) vienen de cuando el sitio era
+   oscuro; ahora los tres son rosados de la paleta del logo:
+     dark → #F28CBF  fondo principal (hero, tienda, blog…)
+     wine → #F99DBC  fondo alterno (recetas, relacionados…)
+     deep → #FC72A6  footer
+   Sobre rosado el texto es oscuro y el botón primario es oscuro (baya).
    ════════════════════════════════════════════════════════════════════════ */
 
-/* ── Oscuro (por defecto) ─────────────────────────────────────────────── */
+/* ── Rosa (por defecto) ───────────────────────────────────────────────── */
 :root,
 [data-tone="dark"] {
-  --background: var(--brand-night);
-  --foreground: var(--brand-text-on-dark);
+  --background: var(--brand-pink);
+  --foreground: var(--brand-text-on-pink);
 
-  --card: var(--brand-elevated);
-  --card-foreground: var(--brand-text-on-dark);
-  --popover: var(--brand-elevated);
-  --popover-foreground: var(--brand-text-on-dark);
+  --card: var(--brand-ice);
+  --card-foreground: var(--brand-text-on-light);
+  --popover: var(--brand-ice);
+  --popover-foreground: var(--brand-text-on-light);
 
-  --primary: var(--brand-pink);
-  --primary-foreground: var(--brand-night);
-  --secondary: var(--brand-wine);
-  --secondary-foreground: var(--brand-text-on-dark);
-  --muted: var(--brand-wine);
-  --muted-foreground: var(--brand-text-on-dark-muted);
-  --accent: var(--brand-pink);
-  --accent-foreground: var(--brand-night);
+  --primary: var(--brand-berry);
+  --primary-foreground: var(--brand-white);
+  --secondary: var(--brand-rose-100);
+  --secondary-foreground: var(--brand-text-on-light);
+  --muted: var(--brand-rose-100);
+  --muted-foreground: var(--brand-text-on-pink-muted);
+  --accent: var(--brand-rose-100);
+  --accent-foreground: var(--brand-text-on-light);
   --destructive: var(--brand-danger);
 
-  --border: var(--brand-border-on-dark);
-  --input: var(--brand-border-on-dark);
-  --ring: var(--brand-pink);
+  --border: var(--brand-border-on-pink);
+  --input: var(--brand-border-on-pink);
+  --ring: var(--brand-berry);
 
-  --chart-1: var(--brand-pink);
+  --chart-1: var(--brand-berry);
   --chart-2: var(--brand-pink-deep);
   --chart-3: var(--brand-plum);
   --chart-4: var(--brand-violet);
-  --chart-5: var(--brand-text-on-dark-muted);
+  --chart-5: var(--brand-text-on-pink-muted);
 
-  --sidebar: var(--brand-wine);
-  --sidebar-foreground: var(--brand-text-on-dark);
-  --sidebar-primary: var(--brand-pink);
-  --sidebar-primary-foreground: var(--brand-night);
-  --sidebar-accent: var(--brand-elevated);
-  --sidebar-accent-foreground: var(--brand-text-on-dark);
-  --sidebar-border: var(--brand-border-on-dark);
-  --sidebar-ring: var(--brand-pink);
+  --sidebar: var(--brand-pink);
+  --sidebar-foreground: var(--brand-text-on-pink);
+  --sidebar-primary: var(--brand-berry);
+  --sidebar-primary-foreground: var(--brand-white);
+  --sidebar-accent: var(--brand-rose-100);
+  --sidebar-accent-foreground: var(--brand-text-on-light);
+  --sidebar-border: var(--brand-border-on-pink);
+  --sidebar-ring: var(--brand-berry);
 
   --radius: 0.75rem;
 }
 
-/* ── Vino (oscuro alterno) — igual que oscuro, solo cambia el fondo ───── */
+/* ── Rosa alterno — igual que «rosa», solo cambia el fondo ────────────── */
 [data-tone="wine"] {
-  --background: var(--brand-wine);
-  --secondary: var(--brand-night);
-  --muted: var(--brand-night);
-  --sidebar: var(--brand-night);
+  --background: var(--brand-rose-300);
+  --sidebar: var(--brand-rose-300);
 }
 
-/* ── Profundo (footer) ────────────────────────────────────────────────── */
+/* ── Footer ───────────────────────────────────────────────────────────── */
 [data-tone="deep"] {
-  --background: var(--brand-deep);
-  --card: var(--brand-night);
-  --popover: var(--brand-night);
-  --secondary: var(--brand-night);
-  --muted: var(--brand-night);
+  --background: var(--brand-pink-deep);
+  --sidebar: var(--brand-pink-deep);
 }
 
 /* ── Claro (secciones de respiro) ─────────────────────────────────────── */
@@ -154,30 +176,30 @@
   --sidebar-ring: var(--brand-plum);
 }
 
-/* ── Ciruela (captación / punto alto) ─────────────────────────────────── */
+/* ── Magenta (captación / punto alto) ─────────────────────────────────────
+   Fondo #F53480. Con texto oscuro da 5:1; con blanco solo 3,7:1, por eso el
+   texto aquí es oscuro y el botón primario es oscuro con texto blanco. */
 [data-tone="plum"] {
-  --background: var(--brand-plum);
-  --foreground: var(--brand-white);
+  --background: var(--brand-rose-600);
+  --foreground: var(--brand-text-on-pink);
 
-  /* Las tarjetas sobre ciruela son ciruela más claro con texto blanco,
-     así el texto tenue (muted) sigue siendo legible dentro de ellas. */
-  --card: color-mix(in oklch, var(--brand-plum), var(--brand-white) 10%);
-  --card-foreground: var(--brand-white);
-  --popover: color-mix(in oklch, var(--brand-plum), var(--brand-white) 10%);
-  --popover-foreground: var(--brand-white);
+  --card: var(--brand-ice);
+  --card-foreground: var(--brand-text-on-light);
+  --popover: var(--brand-ice);
+  --popover-foreground: var(--brand-text-on-light);
 
-  --primary: var(--brand-pink);
-  --primary-foreground: var(--brand-night);
-  --secondary: color-mix(in oklch, var(--brand-plum), var(--brand-white) 12%);
-  --secondary-foreground: var(--brand-white);
-  --muted: color-mix(in oklch, var(--brand-plum), var(--brand-white) 12%);
-  --muted-foreground: color-mix(in oklch, var(--brand-white), var(--brand-plum) 25%);
-  --accent: var(--brand-pink);
-  --accent-foreground: var(--brand-night);
+  --primary: var(--brand-night);
+  --primary-foreground: var(--brand-white);
+  --secondary: var(--brand-rose-100);
+  --secondary-foreground: var(--brand-text-on-light);
+  --muted: var(--brand-rose-100);
+  --muted-foreground: var(--brand-night); /* sobre #F53480 solo el negro pasa para texto pequeño */
+  --accent: var(--brand-rose-100);
+  --accent-foreground: var(--brand-text-on-light);
 
-  --border: color-mix(in oklch, var(--brand-white), transparent 70%);
-  --input: color-mix(in oklch, var(--brand-white), transparent 50%);
-  --ring: var(--brand-pink);
+  --border: color-mix(in oklch, var(--brand-night), transparent 70%);
+  --input: color-mix(in oklch, var(--brand-night), transparent 50%);
+  --ring: var(--brand-night);
 }
 
 /* ════════════════════════════════════════════════════════════════════════
@@ -189,6 +211,11 @@
   --color-brand-pink-deep: var(--brand-pink-deep);
   --color-brand-plum: var(--brand-plum);
   --color-brand-violet: var(--brand-violet);
+  --color-brand-rose-100: var(--brand-rose-100);
+  --color-brand-rose-200: var(--brand-rose-200);
+  --color-brand-rose-300: var(--brand-rose-300);
+  --color-brand-rose-600: var(--brand-rose-600);
+  --color-brand-berry: var(--brand-berry);
   --color-brand-night: var(--brand-night);
   --color-brand-wine: var(--brand-wine);
   --color-brand-elevated: var(--brand-elevated);
@@ -300,8 +327,8 @@
   }
 
   ::selection {
-    background: var(--brand-pink);
-    color: var(--brand-night);
+    background: var(--brand-berry);
+    color: var(--brand-white);
   }
 }
 
